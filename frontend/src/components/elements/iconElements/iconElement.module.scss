@@ -1,0 +1,17 @@
+@import '../../../styles/colours';
+
+.iconButton {
+    height: 40px;
+    width: 40px;
+    border: none;
+    vertical-align: middle;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 200%;
+    margin: 10px;
+    color: $primaryForeground;
+}
+
+.iconButton:hover {
+    color: $pink;
+}

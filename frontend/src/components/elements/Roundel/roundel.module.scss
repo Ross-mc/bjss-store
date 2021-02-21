@@ -1,0 +1,20 @@
+@import '../../../styles/colours';
+
+$radius: 10;
+
+.container {
+    position: relative;
+    display: inherit;
+}
+.roundel {
+    position: absolute;
+    background-color: $pink;
+    width: #{($radius * 2) + 'px'};
+    height: #{($radius * 2) + 'px'};
+    border-radius: $radius + px;
+    color: $black;
+    right: 0;
+    bottom: $radius + px;
+    font-size: 80%;
+    line-height: 150%;
+}
