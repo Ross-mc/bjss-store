@@ -8,6 +8,7 @@ Academy 2021 TODO
 - Tidy deps.
 - Simplify / structure code
 - Implement signin/registration
+- Fix swagger or remove
 - Consider serving frontend on /
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
