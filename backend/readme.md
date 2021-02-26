@@ -1,14 +1,7 @@
 # BJSS Store 
 
 Academy 2021 TODO
-x Make API consistent with spec and consistent property casing.
-- Flip out Sequlise for something using raw SQL
-x Layers: data access (incl mock), biz, api handler/imperative shell
-   - Maybe unit tests, split integration/unit
-   - rename so layer is obv from file name
-- Tidy deps.
-x Simplify / structure code
-x Implement signin/registration
+- Add SQL data store
 - Fix swagger or remove
 - Consider serving frontend on /
 
@@ -24,20 +17,21 @@ code .
 
 Start the server `npm start`
 Run the unit tests `npm test`
-Run the integration tests against the server `npm integration-test`
+Run the integration tests `npm run integration-test` or all `npm run test-all`
 
 # Debugging
 
 In VS Code, go to the debug tab. In the drop down select what you want to debug. 
 If you choose to debug the server you'll have to make requests to it somehow.
 
-# Design WIP
+# Design Notes (WIP)
 Useful types
 ```typescript
 type ShippingDetails = {
     email: string, name: string, address: string, postcode: string
 }
 type Account = { id: string, passwordHash: string } & ShippingDetails
+type AccountApiResponse = {id: string} & ShippingDetails
 
 type ProductQuantity = {id: number, quantityRemaining: number}
 type Product = ProductQuantity & {
@@ -56,45 +50,37 @@ type Order = OrderSummary & {
     shippingDetails?: ShippingDetails, // not present until ordered
     items: [OrderItem],
 }
-type OrderRequest = {
+type OrderApiRequest = {
     paymentToken: string, 
     shippingDetails: ShippingDetails, 
     items: [OrderItem]
 }
-type OrderResponse = Order | {error: string, items: [ProductQuantity]}
+type OrderApiResponse = Order | {error: string, items: [ProductQuantity]}
 type Basket = {total: number, items: [OrderItem]}
 
 type Session = {basket?: Basket, customerId: string}
 ```
 
-SQL Model
-- product: id, category_id, price, quantity_remaining, short_description, long_description
-- product_category: id, name
-- deal: id: product_id, start_date, end_date
-- account: id, email, name, address, postcode, password_hash
-- order: id, token, customer_id, shipping_id, total, updated_date
-- order_item: id, order_id, product_id, quantity
-- order_shipping: id, email, name, address, postcode
-- session: token, customerId, basket
+API Model
+```
+POST /account/sign-in {email: string, password: string} => AccountApiResponse, starts session
+POST /account/sign-up ShippingDetails => AccountApiResponse, starts session
+GET  /account ShippingDetails => AccountApiResponse, must be signed in
+POST /account ShippingDetails => AccountApiResponse, must be signed in
+GET  /product/catalogue?search|category GET [Product]
+GET  /product/categories [ProductCategory]
+GET  /product/deals [Product]
+GET  /order/basket Basket
+POST /order/basketBasket => Basket, starts session
+GET  /order/history [OrderSummary], must be signed in
+POST /order/checkout OrderRequest => OrderResponse, starts session
+```
 
-/account/sign-in POST  {email: string, password: string} => SC
-/account/sign-up POST {...ShippingDetails, password: string} => SC
-/account SC GET ShippingDetails
-                    POST ShippingDetails
-/product/catalogue?search|category GET  [Product]
-/product/categories [ProductCategory]
-/product/deals [Product]
-/order/basket SC GET Basket
-                 POST Basket => Basket
-/order/history SC GET [OrderSummary]
-/order/checkout POST OrderRequest, returns OrderResponse
-
-
-Best user behaviour is
-- Guest user can create basket, order, see orders until session expires. 
-- After creating a basket or order a guest user can sign in/up and still see those things plus order history. 
-- A signed in user can see basket across devices.
-- A guest or customer can following link in email sent after order to see it.  
+Desired user behaviour is
+- Guest user can view products, deals categories, create/view basket, place order
+- Guest user signing up should not empty basket 
+- Customer (a signed in user) can see basket across devices.
+- Guest or Customer can following link in email sent after order to see it without signing in
 
 
 
