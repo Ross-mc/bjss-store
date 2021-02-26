@@ -1,7 +1,11 @@
 const expect = require('chai').expect
 const fetch = require('node-fetch')
+const express = require('express')
+const api = require('../../layers/api/wiring')
 
-const apiBase = `http://localhost:4001/api`
+
+
+const apiBase = `http://localhost:4001`
 
 describe('Integration testing the API', () => {
 
@@ -12,14 +16,25 @@ describe('Integration testing the API', () => {
 
     // Note: These are integration tests, they assume they're run in a specific sequence.
 
+    let server
+
+    before(async () => {
+        const app = await api.wire(express)
+        server = app.listen(4001)
+    })
+
+    after(done => {
+        server.close(done)
+    })
+
     it('lists products', async () => {
-        const products = await getFromApiExpectingJson('/products')
+        const products = await getFromApiExpectingJson('/api/product/catalogue')
 
         expectListOfProducts(products)
     })
 
-    xit('lists deals', async () => {
-        const deals = await getFromApiExpectingJson('/deals')
+    it('lists deals', async () => {
+        const deals = await getFromApiExpectingJson('/api/product/deals')
 
         expectListOfProducts(deals)
 
@@ -27,8 +42,8 @@ describe('Integration testing the API', () => {
         expect(deals.length).to.be.lessThan(allProducts.length)
     })
 
-    xit('gets categories', async () => {
-        const categories = await getFromApiExpectingJson('/categories')
+    it('gets categories', async () => {
+        const categories = await getFromApiExpectingJson('/api/product/categories')
 
         expect(categories.length).to.be.greaterThan(1) // more than one category
 
@@ -37,7 +52,7 @@ describe('Integration testing the API', () => {
     })
 
     it('lists products in a single category', async () => {
-        const products = await getFromApiExpectingJson('/categories/1')
+        const products = await getFromApiExpectingJson('/api/product/catalogue?category=1')
 
         expectListOfProducts(products)
 
@@ -47,32 +62,27 @@ describe('Integration testing the API', () => {
 
 
     it('creates an order and checks it exists', async () => {
-
-        const requestBody = {
-            address: "Some address",
-            orderItems: [{ ProductId: 2, quantity: 1 }]
-        }
-
-        const response = await fetch(apiBase + '/orders', {
+        const orderRequest = makeOrderRequest()
+        const response = await fetch(apiBase + '/api/order/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestBody),
+            body: JSON.stringify(orderRequest),
         })
 
         expect(response.status).to.equal(200)
         const responseBody = await response.json()
-        expect(responseBody).to.include.keys('id')
+        expect(responseBody).to.include.keys('id', 'shippingDetails', 'items', 'total')
 
         const orderId = responseBody.id
 
         // Check we can fetch it by ID
-        const createdOrder = await getFromApiExpectingJson(`/orders/${orderId}`)
-        expect(createdOrder.orderItems[0]).to.include({ ProductId: 2 })
+        const createdOrder = await getFromApiExpectingJson(`/api/order/${orderId}`)
+        expect(createdOrder.items[0]).to.eql(orderRequest.items[0])
 
         // Check the new order is in the list of all orders
-        const orders = await getFromApiExpectingJson('/orders')
-        const foundOrder = orders.find(order => order.id === orderId)
-        expect(foundOrder).to.not.be.null
+        //const orders = await getFromApiExpectingJson('/api/order/history')
+        //const foundOrder = orders.find(order => order.id === orderId)
+        //expect(foundOrder).to.not.be.null
     })
 
 
@@ -80,7 +90,7 @@ describe('Integration testing the API', () => {
         const response = await fetch(apiBase + path);
         const body = await response.json()
 
-        expect(response.status).to.equal(200)
+        expect(response.status, JSON.stringify(body)).to.equal(200)
         return body
     }
 
@@ -90,12 +100,25 @@ describe('Integration testing the API', () => {
 
         // Roughly the right shape
         expect(jsonBody[0]).to.include.keys(
-            'id', 'shortDescription', 'longDescription', 'price', 'quantity',
-            'CategoryId')
+            'id', 'shortDescription', 'longDescription', 'price', 'quantityRemaining',
+            'categoryId')
     }
 
     async function listProducts() {
-        return await getFromApiExpectingJson('/products')
+        return await getFromApiExpectingJson('/api/product/catalogue')
     }
 })
+
+function makeOrderRequest() {
+    return {
+        paymentToken: 'someTokenToCheckWithPaymentGateway',
+        shippingDetails: {
+            email: 'a@example.com', name: 'a', address: 'b', postcode: 'abc123'
+        },
+        items: [
+            { productId: 1, quantity: 2 },
+            { productId: 2, quantity: 1 }
+        ]
+    }
+}
 
