@@ -6,10 +6,10 @@ function NewAccountService(accountDb) {
         const account = await accountDb.getByEmail(email)
 
         if (!account)
-            return { error: 'invalidEmail' }
+            return { error: 'invalidEmail', account: email }
 
         if (!validatePassword(password, account.passwordHash))
-            return { error: 'invalidPassword' }
+            return { error: 'invalidPassword', account: email }
 
         return omitPasswordHash(account)
     }

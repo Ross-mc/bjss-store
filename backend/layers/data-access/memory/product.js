@@ -8,7 +8,7 @@ function getTestData() {
                 id: 0,
                 categoryId: 0,
                 price: 100,
-                quantityRemaining: 2,
+                quantityRemaining: 2, 
                 shortDescription: 'Dog',
                 longDescription: 'The dog (Canis familiaris when considered a distinct species or Canis lupus familiaris when considered a subspecies of the wolf) is a domesticated carnivore of the family Canidae...',
             },
@@ -16,7 +16,7 @@ function getTestData() {
                 id: 1,
                 categoryId: 0,
                 price: 1000,
-                quantityRemaining: 2,
+                quantityRemaining: 1000, // lots to allow testing without running out
                 shortDescription: 'Giraffe',
                 longDescription: 'The giraffe (Giraffa) is an African artiodactyl mammal, the tallest living terrestrial animal and the largest ruminant. It is traditionally considered to be one species, Giraffa...',
             },
@@ -24,7 +24,7 @@ function getTestData() {
                 id: 2,
                 categoryId: 0,
                 price: 90,
-                quantityRemaining: 2,
+                quantityRemaining: 1000, // lots to allow testing without running out
                 shortDescription: 'Koala',
                 longDescription: 'The koala or, inaccurately, koala bear[a] (Phascolarctos cinereus) is an arboreal herbivorous marsupial native to Australia. It is the only extant representative of the family Phascolarctidae...',
             },

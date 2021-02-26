@@ -33,7 +33,7 @@ async function NewAccountDatabase() {
         const found = accounts.find(a => a.id === account.id)
 
         if (!found)
-            throw new Error(`Account ${accountId} not found`)
+            throw new Error(`Account ${account.id} not found`)
 
         // overwrite any properties we were given
         Object.assign(found, clone(account))

@@ -12,8 +12,6 @@ describe('Product Service', () => {
     let service
     const testData = productDatabase.test.getTestData()
 
-    const createAccount = async () => service.signUp(signUpData)
-
     beforeEach(async () => {
         service = NewProductService(await productDatabase.NewProductDatabase())
     })
@@ -68,8 +66,8 @@ describe('Product Service', () => {
         })
         const products = await service.searchProducts()
         expect(findById(products, 0).quantityRemaining).to.equal(1)
-        expect(findById(products, 2).quantityRemaining).to.equal(0)
-        expect(findById(products, 1).quantityRemaining).to.equal(2) // unchanged
+        expect(findById(products, 2).quantityRemaining).to.equal(998)
+        expect(findById(products, 1).quantityRemaining).to.equal(1000) // unchanged
     })
 
     it('Does not decrease stock below 0', async () => {

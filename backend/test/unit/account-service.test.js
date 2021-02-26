@@ -33,11 +33,11 @@ describe('Account Service', () => {
 
     it('fails sign in', async () => {
         await createAccount()
-        let error = await service.signIn(signUpData.email, 'not password')
-        expect(error).to.eql({error: 'invalidPassword'})
+        let response = await service.signIn(signUpData.email, 'not password')
+        expect(response.error).to.equal('invalidPassword')
 
-        error = await service.signIn('invalid@example.com', signUpData.password)
-        expect(error).to.eql({error: 'invalidEmail'})
+        response = await service.signIn('invalid@example.com', signUpData.password)
+        expect(response.error).to.equal('invalidEmail')
     })
 
     it('fetches an account', async () => {

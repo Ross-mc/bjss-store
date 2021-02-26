@@ -51,7 +51,7 @@ const asyncWrap = fn =>
         return Promise.resolve(fnReturnPromise).catch(next)
     }
 
-const mustBeSignedIn = (req, res) => {
+const mustBeSignedIn = (req, res, next) => {
     // Signed in users have a customerId in the session.  If present call the
     // next function in the list of functions attached to this path
     if (req.session.customerId)
@@ -59,6 +59,8 @@ const mustBeSignedIn = (req, res) => {
 
     res.status(403).send({ error: 'forbidden', msg: 'user is not signed in' })
 }
+
+const invalidateSession = (req, res, next) => req.session.regenerate(next)
 
 async function setupApiRoutes(app) {
     // Create all the components we need. 
@@ -68,8 +70,8 @@ async function setupApiRoutes(app) {
     const productApi = NewProductApi(productService)
     const orderApi = NewOrderApi(NewOrderService(db.order, productService))
 
-    app.get('/api/account/sign-in', asyncWrap(accountApi.postSignIn))
-    app.get('/api/account/sign-up', asyncWrap(accountApi.postSignUp))
+    app.post('/api/account/sign-in', invalidateSession, asyncWrap(accountApi.postSignIn))
+    app.post('/api/account/sign-up', invalidateSession, asyncWrap(accountApi.postSignUp))
     app.get('/api/account', mustBeSignedIn, asyncWrap(accountApi.getAccount))
     app.post('/api/account', mustBeSignedIn, asyncWrap(accountApi.postAccount))
 
@@ -87,7 +89,9 @@ async function setupApiRoutes(app) {
     // What properties does order ID need to be secure. OWASP Top 10 #3 and #5
     app.get('/api/order/:id', asyncWrap(orderApi.getOrder))
 
-    app.use('/api', (_, res, __) => res.status(404).send({ error: 'apiEndpointNotFound' }))
+    app.use('/api', (req, res, __) =>
+        res.status(404).send({ error: 'apiEndpointNotFound', msg: '/api' + req.path })
+    )
 }
 
 module.exports = {

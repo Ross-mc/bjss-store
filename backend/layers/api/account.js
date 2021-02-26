@@ -16,10 +16,10 @@ function NewAccountApi(accountService) {
             // because that may help an attacker. We do want to know *why* the signin
             // failed (see OWASP Top 10 #10). So, for once, we log.  Note this should
             // really be monitoringService.event(error) rather than log but this'll do
-            console.log(error)
-            return res.sendStatus(403)
+            console.error(account)
+            return res.status(403).json({ error: 'invalidCredentials' })
         }
-        req.session.customerId = account.customerId // this indicates user is signed in!
+        req.session.customerId = account.id // this indicates user is signed in!
         res.json(account)
     }
 
@@ -28,31 +28,32 @@ function NewAccountApi(accountService) {
 
         // This validation is awful.  How should it be improved?
         if (!email || !password || !name || !address || !postcode)
-            return res.sendStatus(400)
+            return res.status(400).json({ error: 'malformedRequest' })
 
         // TODO handle duplicate email better.  At the moment this'll be a 500 error
 
         const account = await accountService.signUp(req.body)
-        req.session.customerId = account.customerId
+        req.session.customerId = account.id // this indicates user is signed in!
         res.json(account)
     }
 
     async function getAccount(req, res) {
-        const account = await accountService.getAccount(req.session.customerId)
+        const account = await accountService.getById(req.session.customerId)
         res.json(account)
     }
-
-    const removeEmptyValues = o =>
-        Object.fromEntries(Object.entries(o).filter(([_, v]) => !v));
 
     async function postAccount(req, res) {
         // This whitelists what we can update. i.e. prevents directly updating
         // passwordHash or adding myRandomProperty to the account
-        const { email, password, name, address, postcode } = req.body
+        const allowedKeys = ['email', 'password', 'name', 'address', 'postcode']
+        const validKeys = Object.keys(req.body)
+            .filter(key => allowedKeys.includes(key)) 
+            .filter(key => !!req.body[key]) // Exclude null, undefined, empty,values
+
+        const update = validKeys.reduce((obj, key) => (obj[key] = req.body[key], obj) ,{})
+
         const customerId = req.session.customerId
-
-        const update = removeEmptyValues({ customerId, email, password, name, address, postcode })
-
+        update.id = customerId
         const account = await accountService.update(update)
         res.json(account)
     }

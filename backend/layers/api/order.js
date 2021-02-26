@@ -35,6 +35,19 @@ function NewOrderApi(orderService) {
         res.json(orders)
     }
 
+    // There's some key API design decisions here.  In theory all we need for an order
+    // is the paymentToken so that we can check the user has paid.  The shipping
+    // details we could fetch from the user's account, however:
+    // - Guest checkout means we'd need shipping details for some requests
+    // - Customers will want to use adddresses other than their default. 
+    // So pushing the decision on where the shipping details come from back to the UI
+    // seems sensible. The items we know from the basket they gave us earlier, however:
+    // - Design for the API user: It doesn't seem obvious that you need to update
+    //   a basket before placing an order. Two API requests where one make sense.
+    // - The basket could be held entirely in the front end in some designs. 
+    // - 'Save for later' could mean there is more than one 'basket'
+    // There's no guarentee these trade offs are right, but it leaves us with a 
+    // self contained OrderRequest that makes few assumptions about the rest of the design.
     async function postCheckout(req, res) {
         const { paymentToken, shippingDetails, items } = req.body
 

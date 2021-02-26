@@ -16,6 +16,7 @@
   },
   "scripts": {
     "test": "mocha test/unit/**/*.js",
+    "test-all": "mocha test/**/*.js",
     "test-watch": "mocha test/unit/**/*.js --watch",
     "integration-test-watch": "mocha test/integration/**/*.js --watch",
     "start": "node server.js"
