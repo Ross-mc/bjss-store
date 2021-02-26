@@ -1,7 +1,9 @@
 const express = require('express')
 const api = require('./layers/api/wiring')
 
-const config = { port: 4001 }
+const config = { 
+  port: process.env.PORT || 4001 
+}
 
 api.wire(express)
   .then(app => {

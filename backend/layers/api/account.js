@@ -31,6 +31,7 @@ function NewAccountApi(accountService) {
             return res.status(400).json({ error: 'malformedRequest' })
 
         // TODO handle duplicate email better.  At the moment this'll be a 500 error
+        // It should really be a 400 error. Either error would allow an enumeration attack.
 
         const account = await accountService.signUp(req.body)
         req.session.customerId = account.id // this indicates user is signed in!

@@ -2,7 +2,6 @@
 
 Academy 2021 TODO
 - Add SQL data store
-- Fix swagger or remove
 - Consider serving frontend on /
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
@@ -15,7 +14,7 @@ npm install
 code .
 ```
 
-Start the server `npm start`
+Start the server `npm start`, poke around here: http://localhost:4001/api-docs
 Run the unit tests `npm test`
 Run the integration tests `npm run integration-test` or all `npm run test-all`
 
@@ -33,8 +32,9 @@ type ShippingDetails = {
 type Account = { id: string, passwordHash: string } & ShippingDetails
 type AccountApiResponse = {id: string} & ShippingDetails
 
-type ProductQuantity = {id: number, quantityRemaining: number}
 type Product = ProductQuantity & {
+    id: number, 
+    quantityRemaining: number
     categoryId: number, 
     price: number,
     shortDescription: string, 
@@ -44,10 +44,10 @@ type ProductCategory = { id: number, name: string }
 type ProductDeal = { productId: number, startDate: Date, endDate: Date }
 
 type OrderItem = { productId: number, quantity: number }
-type OrderSummary = { id: string, total: string, updatedDate: string}
+type OrderSummary = { id: string, total: number, updatedDate: Date}
 type Order = OrderSummary & {
     customerId?: string, // not present on guest checkout
-    shippingDetails?: ShippingDetails, // not present until ordered
+    shippingDetails: ShippingDetails, 
     items: [OrderItem],
 }
 type OrderApiRequest = {
@@ -55,13 +55,16 @@ type OrderApiRequest = {
     shippingDetails: ShippingDetails, 
     items: [OrderItem]
 }
-type OrderApiResponse = Order | {error: string, items: [ProductQuantity]}
+type OrderApiResponse = Order | {
+    error: string, 
+    items: [{productId: number, quantityRemaining: number}]
+}
 type Basket = {total: number, items: [OrderItem]}
 
 type Session = {basket?: Basket, customerId: string}
 ```
 
-API Model
+API Model Summary.  See the OpenAPI spec for details
 ```
 POST /account/sign-in {email: string, password: string} => AccountApiResponse, starts session
 POST /account/sign-up ShippingDetails => AccountApiResponse, starts session
@@ -71,7 +74,7 @@ GET  /product/catalogue?search|category GET [Product]
 GET  /product/categories [ProductCategory]
 GET  /product/deals [Product]
 GET  /order/basket Basket
-POST /order/basketBasket => Basket, starts session
+POST /order/basket Basket => Basket, starts session
 GET  /order/history [OrderSummary], must be signed in
 POST /order/checkout OrderRequest => OrderResponse, starts session
 ```

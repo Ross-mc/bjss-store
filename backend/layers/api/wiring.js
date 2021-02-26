@@ -1,8 +1,7 @@
-const cors = require("cors");
+const YAML = require('yamljs');
+const cors = require("cors")
 const session = require('express-session')
-
-const openApiUi = require("swagger-ui-express");
-const openApiSpec = require('./spec.json')
+const openApiUi = require("swagger-ui-express")
 
 const NewAccountApi = require('./account').NewAccountApi
 const NewProductApi = require('./product').NewProductApi
@@ -30,6 +29,7 @@ async function wire(express) {
 
     // Serve up a web user interface that allows us to explore the APi
     // This is really nice in development, but note OWASP Top 10 #6
+    const openApiSpec = YAML.load('./openapi-spec.yaml')
     app.use("/api-docs", openApiUi.serve, openApiUi.setup(openApiSpec))
 
     await setupApiRoutes(app)
@@ -52,7 +52,7 @@ const asyncWrap = fn =>
     }
 
 const mustBeSignedIn = (req, res, next) => {
-    // Signed in users have a customerId in the session.  If present call the
+    // Signed in users have a customerId in the session.  If present, call the
     // next function in the list of functions attached to this path
     if (req.session.customerId)
         return next()
