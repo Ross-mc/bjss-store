@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Debug Server",
@@ -18,18 +27,25 @@
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args" : ["test/unit/**/*.js"],
+            "args": [
+                "test/unit/**/*.js"
+            ],
             "internalConsoleOptions": "openOnSessionStart",
             "skipFiles": [
                 "<node_internals>/**"
-            ]
+            ],
+            "env": {
+                "DB_CONNECTION" : ""
+            }
         },
         {
             "name": "Debug Integration Tests",
             "type": "node",
             "request": "launch",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-            "args" : ["test/integration/**/*.js"],
+            "args": [
+                "test/integration/**/*.js"
+            ],
             "internalConsoleOptions": "openOnSessionStart",
             "skipFiles": [
                 "<node_internals>/**"

@@ -1,5 +1,5 @@
 const expect = require('chai').expect
-const NewAccountDatabase = require('../../layers/data-access/memory/account').NewAccountDatabase
+const database = require('../../layers/data-access')
 const NewAccountService = require('../../layers/business-logic/account').NewAccountService
 
 describe('Account Service', () => {
@@ -18,7 +18,7 @@ describe('Account Service', () => {
     const createAccount = async () => service.signUp(signUpData)
 
     beforeEach(async () => {
-        service = NewAccountService(await NewAccountDatabase())
+        service = NewAccountService((await database.init()).account)
     })
 
     it('signs up ok', async () => {

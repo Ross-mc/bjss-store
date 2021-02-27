@@ -1,14 +1,15 @@
 # BJSS Store 
 
 Academy 2021 TODO
-- Implement account and order sql, indexes
-- SQL file, try chrome SQL plugin
-- Consider serving frontend on /
+- Consider serving frontend on / or moving to a different repo
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
 
 # Getting started
-Assumes you are running on WSL2/Ubuntu 20 (Windows) or Mac with Visual Studio Code and `apt-get install node`
+Assumes you are running on 
+* WSL2/Ubuntu 20 (Windows). If you want file watching to work setup the repo in Ubuntu /home
+* Visual Studio Code
+* node  `apt-get install node`
 
 ```
 cd backend
@@ -26,7 +27,7 @@ In VS Code, go to the debug tab. In the drop down select what you want to debug.
 If you choose to debug the server you'll have to make requests to it somehow.
 
 # Databases
-By default it runs with a simple in-memory database. To use SQLlite set the
+By default it runs with a simple in-memory data store. To use SQLite set the
 `DB_CONNECTION` environment variable to `sql`, for example:
 ```
 DB_CONNECTION=sql npm run test-all
@@ -35,7 +36,18 @@ or
 ```
 DB_CONNECTION=sql npm start
 ```
-At the moment it deletes the database at the start of every run to make life simpler and nudge us towards automated rather than manual testing.  You can examine the contents of the SQL database by loading it into a tool such as this: https://chrome.google.com/webstore/detail/sqlite-manager
+At the moment it deletes the database at the start of every run to make life simpler and nudge us towards automated rather than manual testing.  You can examine the contents of the SQL database by loading it into a tool such as this: https://chrome.google.com/webstore/detail/sqlite-manager or on the command line:
+* Install `sudo apt-get install sqlite3`
+* Run a query `sqlite3 sqlite.db "select * from categories"`
+
+You can open an interactive session with `sqlite3 sqlite.db`, but *beware* its a static view of the database at the point in timee you started the session. You won't see any upates after. Example session
+```
+sqlite> .tables
+accounts    categories  deals       productssele
+sqlite> select * from categories;
+--- data ---
+sqlite> .quit
+```
 
 # Design Notes (WIP)
 Useful types

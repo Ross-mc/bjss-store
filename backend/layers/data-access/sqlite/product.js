@@ -3,53 +3,50 @@ const productTestData = require('../test-products')
 const schemaDdl = `
 create table categories (
     id integer primary key, 
-    name text
+    name text not null
 );
 
 create table products (
     id integer primary key,
-    quantityRemaining integer,
-    categoryId integer, 
-    price integer,
-    shortDescription text, 
-    longDescription text,
+    quantityRemaining integer not null,
+    categoryId integer not null, 
+    price integer not null,
+    shortDescription text not null, 
+    longDescription text not null,
     foreign key(categoryId) references categories(id)
 );
 
 create table deals (
-    productId integer, 
-    startDate date, 
-    endDate date,
+    productId integer not null, 
+    startDate date not null, 
+    endDate date not null,
     foreign key(productId) references products(id)
 );
 `
 
 function populateData(db, data) {
 
-    const catagoryInsert = db.prepare(
-        `insert into categories (id, name) values(?, ?)`
-    )
-    data.categories.forEach(c => catagoryInsert.run(c.id, c.name))
+    const populate = (dataArray, sql, columnOrder) => {
+        const statement = db.prepare(sql)
+        dataArray.forEach(row => statement.run(columnOrder.map(column => row[column])))
+    }
 
-    const productInsert = db.prepare(
-        `insert into products (id, quantityRemaining, categoryId, price, shortDescription, longDescription) 
-         values(?, ?, ?, ?, ?, ?)`
+    populate(data.categories, `insert into categories (id, name) values(?, ?)`, ['id', 'name'])
+    populate(data.products,
+        `insert into products 
+         (id, quantityRemaining, categoryId, price, shortDescription, longDescription) 
+         values(?, ?, ?, ?, ?, ?)`,
+        ['id', 'quantityRemaining', 'categoryId', 'price', 'shortDescription', 'longDescription']
     )
-    data.products.forEach(p => productInsert.run(
-        p.id, p.quantityRemaining, p.categoryId, p.price, p.shortDescription, p.longDescription
-    ))
-
-
-    const dealInsert = db.prepare(
-        `insert into deals (productId, startDate, endDate) values(?, ?, ?)`
+    populate(data.deals,
+        `insert into deals (productId, startDate, endDate) values(?, ?, ?)`,
+        ['productId', 'startDate', 'endDate']
     )
-    data.deals.forEach(d => dealInsert.run(d.productId, d.startDate, d.endDate))
 }
 
 
 async function NewProductDatabase(db) {
     const inititalData = productTestData.getTestData()
-    const database = inititalData
 
     db.exec(schemaDdl)
     populateData(db, inititalData)
@@ -77,10 +74,9 @@ async function NewProductDatabase(db) {
 
         return db.prepare(
             `select * from products 
-           where shortDescription like ? or longDescription like ?`
-        )
+             where shortDescription like ? or longDescription like ?`
             // What happens if the search string contains a % sign?
-            .all(`%${trimmedSearch}%`, `%${trimmedSearch}%`)
+        ).all(`%${trimmedSearch}%`, `%${trimmedSearch}%`)
     }
 
     async function getProductsWithCurrentDeals(date) {
@@ -102,7 +98,7 @@ async function NewProductDatabase(db) {
              where id = ?`
         )
         Object.entries(productQuantities)
-            .forEach(([id,quantity]) => update.run(quantity, id))
+            .forEach(([id, quantity]) => update.run(quantity, id))
     }
 
 

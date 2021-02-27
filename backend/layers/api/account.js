@@ -26,16 +26,21 @@ function NewAccountApi(accountService) {
     async function postSignUp(req, res) {
         const { email, password, name, address, postcode } = req.body
 
-        // This validation is awful.  How should it be improved?
+        // This validation is awful.  How should it be improved?  Why?
         if (!email || !password || !name || !address || !postcode)
             return res.status(400).json({ error: 'malformedRequest' })
 
-        // TODO handle duplicate email better.  At the moment this'll be a 500 error
-        // It should really be a 400 error. Either error would allow an enumeration attack.
-
-        const account = await accountService.signUp(req.body)
-        req.session.customerId = account.id // this indicates user is signed in!
-        res.json(account)
+        try {
+            const account = await accountService.signUp(req.body)
+            req.session.customerId = account.id // this indicates user is signed in!
+            res.json(account)
+        } catch(e) {
+            // This error message is deliberately misleading in an attempt to not
+            // give information away about what accounts exist to an attacker 
+            // If we think like an attacker, does this misdirection actually hinder us?
+            return res.status(400).json({ error: 'malformedRequest' })
+        }
+        
     }
 
     async function getAccount(req, res) {
