@@ -1,27 +1,41 @@
 # BJSS Store 
 
 Academy 2021 TODO
-- Add SQL data store
+- Implement account and order sql, indexes
+- SQL file, try chrome SQL plugin
 - Consider serving frontend on /
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
 
 # Getting started
+Assumes you are running on WSL2/Ubuntu 20 (Windows) or Mac with Visual Studio Code and `apt-get install node`
 
 ```
 cd backend
 npm install
 code .
 ```
-
-Start the server `npm start`, poke around here: http://localhost:4001/api-docs
-Run the unit tests `npm test`
-Run the integration tests `npm run integration-test` or all `npm run test-all`
+Things to try:
+* Start the server `npm start`, poke around here: http://localhost:4001/api-docs
+* Run the unit tests `npm test`
+* Run the integration tests `npm run integration-test` or all `npm run test-all`
 
 # Debugging
 
 In VS Code, go to the debug tab. In the drop down select what you want to debug. 
 If you choose to debug the server you'll have to make requests to it somehow.
+
+# Databases
+By default it runs with a simple in-memory database. To use SQLlite set the
+`DB_CONNECTION` environment variable to `sql`, for example:
+```
+DB_CONNECTION=sql npm run test-all
+```
+or 
+```
+DB_CONNECTION=sql npm start
+```
+At the moment it deletes the database at the start of every run to make life simpler and nudge us towards automated rather than manual testing.  You can examine the contents of the SQL database by loading it into a tool such as this: https://chrome.google.com/webstore/detail/sqlite-manager
 
 # Design Notes (WIP)
 Useful types
@@ -32,7 +46,7 @@ type ShippingDetails = {
 type Account = { id: string, passwordHash: string } & ShippingDetails
 type AccountApiResponse = {id: string} & ShippingDetails
 
-type Product = ProductQuantity & {
+type Product = {
     id: number, 
     quantityRemaining: number
     categoryId: number, 
@@ -85,17 +99,9 @@ Desired user behaviour is
 - Customer (a signed in user) can see basket across devices.
 - Guest or Customer can following link in email sent after order to see it without signing in
 
-
-
-
-INSERT INTO product (id,product_Category_Id,price,QUANTITY_REMAINING,short_Description,long_Description) VALUES
-	(0,0,1,2,'Dog','The dog (Canis familiaris when considered a distinct species or Canis lupus familiaris when considered a subspecies of the wolf) is a domesticated carnivore of the family Canidae...'),
-	(1,0,1,2,'Giraffe','The giraffe (Giraffa) is an African artiodactyl mammal, the tallest living terrestrial animal and the largest ruminant. It is traditionally considered to be one species, Giraffa...'),
-	(2,0,1,2,'Koala','The koala or, inaccurately, koala bear[a] (Phascolarctos cinereus) is an arboreal herbivorous marsupial native to Australia. It is the only extant representative of the family Phascolarctidae...'),
-	(3,1,1,2,'Brazil Nut','The Brazil nut (Bertholletia excelsa) is a South American tree in the family Lecythidaceae, and it is also the name of the trees commercially harvested edible seeds. It is one of the largest...'),
-	(4,1,1,2,'Apricot','An apricot is a fruit, or the tree that bears the fruit, of several species in the genus Prunus (stone fruits).'),
-	(5,1,1,2,'Orange','The orange is the fruit of various citrus species in the family Rutaceae (see list of plants known as orange); it primarily refers to Citrus × sinensis, which is also called sweet orange...');
-	
-INSERT INTO product_category (id,name) VALUES
-	(0,'Animals'),
-	(1,'Fruits');
+Other design notes
+- Using Node 10 as it was the default for WSL2/Ubuntu 20. More recent would make setup harder and we'd need to figure out what each cloud provider supported as a max.
+- So, using CommonJS modules to avoid extra complexity from transpilation.
+- Not Typescript for simplicity of setup. Also it's a more complex lanaguage to learn. However, you can see by the Typescript model above that I need some type defintions to help me reason about the code, so I'm on the fence about if JS is actually any easier.
+- Express rather than Azure Functions. Mainly because it is easier to Google for Express solutions, but also because sessions/authorisation would need a re-think.
+- No 'code first' OpenAPI spec despite the tediousness of OpenAPI to write. Mainly for simplicity, but also because the spec might be useful a useful artefact to test other implementations against. 

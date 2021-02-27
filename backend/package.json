@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "better-sqlite3": "^7.1.2",
     "cors": "*",
     "express": "*",
     "express-session": "*",

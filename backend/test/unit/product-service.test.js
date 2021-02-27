@@ -1,5 +1,6 @@
 const expect = require('chai').expect
-const productDatabase = require('../../layers/data-access/memory/product')
+const database = require('../../layers/data-access')
+const productTestData = require('../../layers/data-access/test-products')
 const NewProductService = require('../../layers/business-logic/product').NewProductService
 
 const findById = (products, id) => products.find(p => p.id === id)
@@ -8,12 +9,14 @@ describe('Product Service', () => {
 
     // Mainly happy path regression testing for this toy app. 
     // The error / edge case handling isn't that good anyway. 
+    // Note: the default (in memory) data access layer makes for a good testing
+    // fake, so we don't really need a mock database.
 
     let service
-    const testData = productDatabase.test.getTestData()
+    const testData = productTestData.getTestData()
 
     beforeEach(async () => {
-        service = NewProductService(await productDatabase.NewProductDatabase())
+        service = NewProductService((await database.init()).product)
     })
 
     it('gets all', async () => {
@@ -88,7 +91,7 @@ function compareProduct(expected, actual) {
 function compareProducts(data, ids, actual) {
 
     const actualIds = actual.map(product => product.id)
-    expect(ids).to.eql(actualIds)
+    expect(actualIds).to.eql(ids)
 
     ids.forEach(id => compareProduct(findById(data, id), findById(actual, id)))
 }

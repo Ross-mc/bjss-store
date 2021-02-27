@@ -6,6 +6,8 @@ describe('Order Service', () => {
 
     // Mainly happy path regression testing for this toy app. 
     // The error / edge case handling isn't that good anyway. 
+    // Note: the default (in memory) data access layer makes for a good testing
+    // fake, so we don't really need a mock database.
 
     let service
     let productService
