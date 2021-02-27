@@ -6,12 +6,13 @@ const utils = require('../../../utils/utils')
 const schemaDdl = `
 create table accounts (
     id char(22) primary key, 
-    email text not null unique, 
+    email text not null, 
     name text not null, 
     address text not null, 
     postcode text not null, 
     passwordHash text not null
 );
+create unique index idxAccountsEmail on accounts(email);
 `
 
 async function NewAccountDatabase(db) {
@@ -51,8 +52,9 @@ async function NewAccountDatabase(db) {
         const a = found
         db.prepare(
             `update accounts set
-            (id, email, name, address, postcode, passwordHash) = (?, ?, ?, ?, ?, ?)`
-        ).run(a.id, a.email, a.name, a.address, a.postcode, a.passwordHash)
+            (id, email, name, address, postcode, passwordHash) = (?, ?, ?, ?, ?, ?)
+            where id = ?`
+        ).run(a.id, a.email, a.name, a.address, a.postcode, a.passwordHash, a.id)
         return found
     }
 

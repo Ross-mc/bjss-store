@@ -2,7 +2,7 @@ const Database = require('better-sqlite3')
 
 const account = require('./account')
 const product = require('./product')
-const order = require('../memory/order')
+const order = require('./order')
 
 async function NewDatabase(connection) {
 
@@ -11,7 +11,7 @@ async function NewDatabase(connection) {
     return {
         account: await account.NewAccountDatabase(db),
         product: await product.NewProductDatabase(db),
-        order: await order.NewOrderDatabase()
+        order: await order.NewOrderDatabase(db)
     }
 }
 

@@ -49,7 +49,10 @@
             "internalConsoleOptions": "openOnSessionStart",
             "skipFiles": [
                 "<node_internals>/**"
-            ]
+            ],
+            "env": {
+                "DB_CONNECTION" : "sql-mem"
+            }
         }
     ]
 }

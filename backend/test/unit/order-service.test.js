@@ -1,5 +1,5 @@
 const expect = require('chai').expect
-const NewOrderDatabase = require('../../layers/data-access/memory/order').NewOrderDatabase
+const database = require('../../layers/data-access')
 const NewOrderService = require('../../layers/business-logic/order').NewOrderService
 
 describe('Order Service', () => {
@@ -45,7 +45,7 @@ describe('Order Service', () => {
 
     beforeEach(async () => {
         productService = makeProductService()
-        service = NewOrderService(await NewOrderDatabase(), productService)
+        service = NewOrderService((await database.init()).order, productService)
     })
 
     it('updates basket', async () => {

@@ -15,6 +15,7 @@ create table products (
     longDescription text not null,
     foreign key(categoryId) references categories(id)
 );
+create index idxProductsCategoryId on products(categoryId);
 
 create table deals (
     productId integer not null, 
