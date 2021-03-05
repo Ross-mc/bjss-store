@@ -5,7 +5,7 @@ const utils = require('../../../utils/utils')
 // follow that here. Would an int be better?
 const schemaDdl = `
 create table accounts (
-    id char(22) primary key, 
+    id integer primary key, 
     email text not null, 
     name text not null, 
     address text not null, 
@@ -18,10 +18,11 @@ create unique index idxAccountsEmail on accounts(email);
 async function NewAccountDatabase(db) {
 
     db.exec(schemaDdl)
+    let idCounter = 0
 
     async function add(account) {
         try {
-            const a = {...account, id: utils.urlSafeUniqueId()}
+            const a = { ...account, id: idCounter++ }
             const sql =
                 `insert into accounts (id, email, name, address, postcode, passwordHash) 
                  values(?, ?, ?, ?, ?, ?)`

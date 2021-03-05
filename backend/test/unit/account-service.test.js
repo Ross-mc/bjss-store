@@ -24,7 +24,7 @@ describe('Account Service', () => {
     it('signs up ok', async () => {
         const account = await service.signUp(signUpData)
         compareAccountData(account,signUpData)
-        expect(account.id.length).to.be.greaterThan(10) // check it is non-trivial
+        expect(account.id).to.not.be.undefined
     })
 
     it('signs in ok', async () => {

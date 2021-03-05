@@ -2,9 +2,6 @@
 
 Academy 2021 TODO
 - order history returns orders
-- 401 errors
-- accountId
-- account.id as number
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
 
@@ -75,7 +72,7 @@ type ProductDeal = { productId: number, startDate: Date, endDate: Date }
 type OrderItem = { productId: number, quantity: number }
 type OrderSummary = { id: string, total: number, updatedDate: Date}
 type Order = OrderSummary & {
-    customerId?: string, // not present on guest checkout
+    customerId?: number, // not present on guest checkout
     shippingDetails: ShippingDetails, 
     items: [OrderItem],
 }

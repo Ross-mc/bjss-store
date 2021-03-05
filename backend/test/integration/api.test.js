@@ -245,7 +245,7 @@ describe('Integration testing the API', () => {
     }
 
     async function makeGetRequestToApiThatReturnsJson(path, expectedStatus) {
-        const options = session ? {
+        const options = session !== undefined ? {
             credentials: 'include',
             headers: { 'Cookie': session }
         } : {}

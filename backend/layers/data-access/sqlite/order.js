@@ -12,8 +12,8 @@ const clone = utils.clone
 const schemaDdl = `
 create table orders (
     pk integer primary key,
-    id char(22) not null, 
-    customerId char(22),
+    id char(22) not null,
+    customerId integer,
     total integer not null,
     updatedDate dateTime not null, 
     email text not null, 

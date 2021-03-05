@@ -54,7 +54,7 @@ const asyncWrap = fn =>
 const mustBeSignedIn = (req, res, next) => {
     // Signed in users have a customerId in the session.  If present, call the
     // next function in the list of functions attached to this path
-    if (req.session.customerId)
+    if (req.session.customerId !== undefined)
         return next()
 
     res.status(401).send({ error: 'forbidden', msg: 'user is not signed in' })

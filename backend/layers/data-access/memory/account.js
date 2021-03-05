@@ -8,13 +8,14 @@ const clone = utils.clone
 
 async function NewAccountDatabase() {
     const accounts = []
+    let idCounter = 0
 
     async function add(account) {
         // In a SQL database we might enforce this constraint in the database itself
         if (await getByEmail(account.email))
             throw new Error(`${account.email} already registered`)
 
-        const toInsert = utils.newEntityFromObject(account)
+        const toInsert = {id: idCounter++, ...clone(account)}
         accounts.push(toInsert)
         return clone(toInsert)
     }

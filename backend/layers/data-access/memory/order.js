@@ -32,7 +32,8 @@ async function NewOrderDatabase() {
     }
 
     async function addOrder(customerId, order) {
-        const toAdd = utils.newEntityFromObject({
+        const toAdd = clone({
+            id: utils.urlSafeUniqueId(),
             ...order,
             customerId,
             updatedDate: new Date()

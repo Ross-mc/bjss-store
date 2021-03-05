@@ -20,14 +20,11 @@ const urlSafeUniqueId = () => {
     return base64ToBase64UrlSafe(random128bitNumber.toString('base64'))
 }
 
-const newEntityFromObject = object => ({ id: urlSafeUniqueId(), ...clone(object) })
-
 
 module.exports = {
     caseInsensitiveIncludes,
     equalsIgnoreCase,
     clone,
     pick,
-    newEntityFromObject,
     urlSafeUniqueId
 }
