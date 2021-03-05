@@ -10,16 +10,8 @@ const clone = utils.clone
 async function NewOrderDatabase() {
     const orders = []
 
-    async function getOrderSummariesByCustomerId(customerId) {
-        const matched = orders.filter(order => order.customerId === customerId)
-
-        // The contract for this function is that we return orders without items
-        // and shipping details. In this data store we've chose to store thise
-        // within the order so strip them out
-        return matched.map(order => {
-            const {id, total, updatedDate} = order
-            return {id, total, updatedDate}
-        })
+    async function getOrdersByCustomerId(customerId) {
+        return orders.filter(order => order.customerId === customerId)
     }
 
     async function getOrderByToken(orderToken) {
@@ -44,7 +36,7 @@ async function NewOrderDatabase() {
     }
 
     return {
-        getOrderSummariesByCustomerId,
+        getOrdersByCustomerId,
         getOrderByToken,
         addOrder
     }

@@ -275,7 +275,7 @@ components:
           type: integer
         name: 
           type: string
-    OrderSummary:
+    Order:
       type: object
       properties:
         id:
@@ -285,6 +285,12 @@ components:
         updatedDate: 
           type: string
           format: date-time
+        shippingDetails: 
+          $ref: '#/components/schemas/ShippingDetails'
+        items: 
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
     OrderItem:
       type: object
       properties:
@@ -318,16 +324,7 @@ components:
               quantityRemaining:
                 type: number
     OrderOk:
-      allOf:     
-        - $ref: '#/components/schemas/OrderSummary'
-        - type: object
-          properties:
-            shippingDetails: 
-              $ref: '#/components/schemas/ShippingDetails'
-            items: 
-              type: array
-              items:
-                $ref: '#/components/schemas/OrderItem'
+      $ref: '#/components/schemas/Order'
     BasketRequest:
       type: object
       properties:

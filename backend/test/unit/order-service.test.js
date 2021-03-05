@@ -95,16 +95,17 @@ describe('Order Service', () => {
         const response2 = await service.createOrder('otherCustomerId', request2)
         const response3 = await service.createOrder('testCustomerId', request3)
 
-        const summaries = await service.getOrderSummariesByCustomerId('testCustomerId')
-        expect(summaries.length).to.equal(2)
+        const orders = await service.getOrdersByCustomerId('testCustomerId')
+        expect(orders.length).to.equal(2)
 
-        const order1Summary = summaries.find(s=>s.id===response1.id)
-        expect(order1Summary.id).to.equal(response1.id)
+        const order1 = orders.find(s=>s.id===response1.id)
+        expect(order1.id).to.equal(response1.id)
 
-        const order3Summary = summaries.find(s=>s.id===response3.id)
-        expect(order3Summary.id).to.equal(response3.id)
-        expect(order3Summary.total).to.equal(response3.total)
-        expect(Date.parse(order3Summary.updatedDate)).to.be.lessThan(Date.now()+1)
+        const order3 = orders.find(s=>s.id===response3.id)
+        expect(order3.id).to.equal(response3.id)
+        expect(order3.total).to.equal(response3.total)
+        expect(Date.parse(order3.updatedDate)).to.be.lessThan(Date.now()+1)
+        expect(order3.items.length).to.be.greaterThan(0)
 
         const byToken = await service.getOrderByToken(response2.id)
         expect(byToken).to.eql(response2)

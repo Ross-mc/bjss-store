@@ -30,7 +30,7 @@ function NewOrderService(orderDb, productService) {
     return {
         // The service layer adds little for viewing orders and baskets.
         // so pass straight through for now. 
-        getOrderSummariesByCustomerId: orderDb.getOrderSummariesByCustomerId,
+        getOrdersByCustomerId: orderDb.getOrdersByCustomerId,
         getOrderByToken: orderDb.getOrderByToken,
 
         updateBasket,

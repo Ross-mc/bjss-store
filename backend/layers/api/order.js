@@ -26,7 +26,7 @@ function NewOrderApi(orderService) {
     }
 
     async function getHistory(req, res) {
-        const orders = await orderService.getOrderSummariesByCustomerId(req.session.customerId)
+        const orders = await orderService.getOrdersByCustomerId(req.session.customerId)
         res.json(orders)
     }
 

@@ -1,8 +1,5 @@
 # BJSS Store 
 
-Academy 2021 TODO
-- order history returns orders
-
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
 
 # Getting started
@@ -70,8 +67,10 @@ type ProductCategory = { id: number, name: string }
 type ProductDeal = { productId: number, startDate: Date, endDate: Date }
 
 type OrderItem = { productId: number, quantity: number }
-type OrderSummary = { id: string, total: number, updatedDate: Date}
-type Order = OrderSummary & {
+type Order = {
+    id: string, 
+    total: number, 
+    updatedDate: Date
     customerId?: number, // not present on guest checkout
     shippingDetails: ShippingDetails, 
     items: [OrderItem],
@@ -101,7 +100,7 @@ GET  /product/categories [ProductCategory]
 GET  /product/deals [Product]
 GET  /order/basket Basket
 POST /order/basket Basket => Basket, starts session
-GET  /order/history [OrderSummary], must be signed in
+GET  /order/history [Order], must be signed in
 POST /order/checkout OrderRequest => OrderResponse, starts session
 ```
 

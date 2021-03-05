@@ -1,11 +1,5 @@
 const utils = require('../../../utils/utils')
 
-// We clone (deep copy) everything we put in and take out of our in memory
-// data store. This prevents calling code that has retained a refence to it
-// from being able to acidentally manipulate data that is now inside our
-// fake database. 
-const clone = utils.clone
-
 // Order Id is a base64url encoded random number for reasons stated elsewhere
 // We add an integer primary key to make it more efficient to link order items
 // with an order.  
@@ -41,30 +35,28 @@ async function NewOrderDatabase(db) {
 
     const externalColumns = 'id, customerId, total, updatedDate, email, name, address, postcode'
 
-    async function getOrderSummariesByCustomerId(customerId) {
-        return db.prepare('select id, total, updatedDate from orders where customerId = ?').all(customerId)
+    async function getOrdersByCustomerId(customerId) {
+        const ordersAndItems = db.prepare(
+            `select ${externalColumns}, orderItems.productId, orderItems.quantity from orders
+             inner join orderItems on orderItems.orderId = orders.pk
+             and orders.customerId = ?`
+        ).all(customerId)
+
+        return mapJoinedOrdersAndItemToOrders(ordersAndItems)
     }
 
     async function getOrderByToken(orderToken) {
         // In our simple database the id and the token might as well be the same.
         // Token is suitable for sending in a 'track my order' email. So needs to be 
-        // unguessable. In practice we'd have an internal order id and separate token
-        // so we can reset the token if it gets stolen.   
-        const orderRow = db.prepare(`select pk, ${externalColumns} from orders where id = ?`)
-            .get(orderToken)
-        // We could extract orders and items with a single query. Why would that be better or worse?
-        const items = db.prepare(`select productId, quantity from orderItems where orderId = ?`)
-            .all(orderRow.pk)
+        // unguessable. In practice we'd have an internal order id for reference
+        // and separate token so we can reset the token if it gets stolen.   
+        const ordersAndItems = db.prepare(
+            `select ${externalColumns}, orderItems.productId, orderItems.quantity from orders
+             inner join orderItems on orderItems.orderId = orders.pk
+             and orders.id = ?`
+        ).all(orderToken)
 
-        const {id, customerId, total, updatedDate, email, name, address, postcode} = orderRow
-        return {
-            id,
-            customerId,
-            total,
-            updatedDate,
-            shippingDetails: {email, name, address, postcode},
-            items
-        }
+        return mapJoinedOrdersAndItemToOrders(ordersAndItems)[0]
     }
 
     async function addOrder(customerId, order) {
@@ -88,7 +80,7 @@ async function NewOrderDatabase(db) {
     }
 
     return {
-        getOrderSummariesByCustomerId,
+        getOrdersByCustomerId,
         getOrderByToken,
         addOrder
     }
@@ -96,4 +88,28 @@ async function NewOrderDatabase(db) {
 
 module.exports = {
     NewOrderDatabase
+}
+
+
+function mapJoinedOrdersAndItemToOrders(rows) {
+    const orders = rows.reduce((obj, row) => {
+        let order = obj[row.id]
+
+        if (!order) {
+            const { id, customerId, total, updatedDate, email, name, address, postcode } = row
+            order = {
+                id,
+                customerId,
+                total,
+                updatedDate,
+                shippingDetails: { email, name, address, postcode },
+                items: []
+            }
+            obj[row.id] = order
+        }
+
+        order.items.push({productId: row.productId, quantity: row.quantity})
+        return obj
+    }, {})
+    return Object.values(orders)
 }
