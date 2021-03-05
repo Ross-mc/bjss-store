@@ -166,7 +166,7 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/Account'
-        '403':
+        '401':
           description: Invalid credentials
   /api/account/sign-up:
     post:
@@ -204,7 +204,7 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/Account'
-        '403':
+        '401':
           description: User is not signed in      
     post:
       summary: Updates the users account
@@ -225,7 +225,7 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/Account'
-        '403':
+        '401':
           description: User is not signed in    
 components:
   securitySchemes:

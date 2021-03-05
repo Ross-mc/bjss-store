@@ -99,7 +99,7 @@ describe('Integration testing the API', () => {
     })
 
     const checkNotSignedIn = async () =>
-        await makeGetRequestToApiThatReturnsJson('/api/order/history', 403)
+        await makeGetRequestToApiThatReturnsJson('/api/order/history', 401)
 
     // We use this later to check sign-in.
     // At the top we said mainly happy path testing, but negative security testing
@@ -156,7 +156,7 @@ describe('Integration testing the API', () => {
         const response = await makePostRequestToApiThatReturnsJson(
             '/api/account/sign-in',
             invalidCredentials,
-            403
+            401
         )
         await checkNotSignedIn()
     })
@@ -181,7 +181,7 @@ describe('Integration testing the API', () => {
         // check old password fails
         await makePostRequestToApiThatReturnsJson('/api/account/sign-in',
             { email, password: user.password },
-            403
+            401
         )
 
         // check new password works

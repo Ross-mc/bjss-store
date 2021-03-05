@@ -1,7 +1,10 @@
 # BJSS Store 
 
 Academy 2021 TODO
-- Consider serving frontend on / or moving to a different repo
+- order history returns orders
+- 401 errors
+- accountId
+- account.id as number
 
 This is a Javascript backend using Node.JS to run the Javascript and a framework called Express to help implement the APIs. 
 
@@ -96,7 +99,7 @@ POST /account/sign-in {email: string, password: string} => AccountApiResponse, s
 POST /account/sign-up ShippingDetails => AccountApiResponse, starts session
 GET  /account ShippingDetails => AccountApiResponse, must be signed in
 POST /account ShippingDetails => AccountApiResponse, must be signed in
-GET  /product/catalogue?search|category GET [Product]
+GET  /product/catalogue?search|category [Product]
 GET  /product/categories [ProductCategory]
 GET  /product/deals [Product]
 GET  /order/basket Basket

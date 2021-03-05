@@ -17,7 +17,7 @@ function NewAccountApi(accountService) {
             // failed (see OWASP Top 10 #10). So, for once, we log.  Note this should
             // really be monitoringService.event(error) rather than log but this'll do
             console.error(account)
-            return res.status(403).json({ error: 'invalidCredentials' })
+            return res.status(401).json({ error: 'invalidCredentials' })
         }
         req.session.customerId = account.id // this indicates user is signed in!
         res.json(account)

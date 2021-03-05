@@ -57,7 +57,7 @@ const mustBeSignedIn = (req, res, next) => {
     if (req.session.customerId)
         return next()
 
-    res.status(403).send({ error: 'forbidden', msg: 'user is not signed in' })
+    res.status(401).send({ error: 'forbidden', msg: 'user is not signed in' })
 }
 
 const invalidateSession = (req, res, next) => req.session.regenerate(next)
