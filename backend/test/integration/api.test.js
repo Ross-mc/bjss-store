@@ -67,7 +67,7 @@ describe('Integration testing the API', () => {
     })
 
 
-    it('creates an order and checks it exists', async () => {
+    xit('creates an order and checks it exists', async () => {
         const orderRequest = makeOrderRequest()
 
         const response = await makePostRequestToApiThatReturnsJson('/api/order/checkout', orderRequest)
@@ -85,7 +85,7 @@ describe('Integration testing the API', () => {
         //expect(foundOrder).to.not.be.null
     })
 
-    it('gets and sets a basket', async () => {
+    xit('gets and sets a basket', async () => {
         // A basket update is the same as the items part of an order. 
         const basket = { items: makeOrderRequest().items }
 
@@ -113,14 +113,14 @@ describe('Integration testing the API', () => {
 
 
     // A single test for all signed in behaviour is poor.  
-    it('signs up, is signed in', async () => {
+    xit('signs up, is signed in', async () => {
         await makePostRequestToApiThatReturnsJson(
             '/api/account/sign-up', makeTestUser('signup@example.com')
         )
         await checkSignedIn()
     })
 
-    it('Signs in', async () => {
+    xit('Signs in', async () => {
         const user = makeTestUser('signin@example.com')
         await makePostRequestToApiThatReturnsJson('/api/account/sign-up', user)
 
@@ -148,7 +148,7 @@ describe('Integration testing the API', () => {
     }
 
     // This test run after we've established that valid credentials do work!
-    it('Invalid credentials rejected', async () => {
+    xit('Invalid credentials rejected', async () => {
         const invalidCredentials = {
             email: 'nosuch@example.com',
             password: 'password'
@@ -161,7 +161,7 @@ describe('Integration testing the API', () => {
         await checkNotSignedIn()
     })
 
-    it('Gets/sets account', async () => {
+    xit('Gets/sets account', async () => {
         const original = await signIn()
         const modified = await makePostRequestToApiThatReturnsJson('/api/account', { name: 'changed' })
 
@@ -172,7 +172,7 @@ describe('Integration testing the API', () => {
         expect(fetched).to.eql(modified)
     })
 
-    it('Handles password change', async () => {
+    xit('Handles password change', async () => {
         const email = 'passwordchange@example.com'
         const user = makeTestUser(email)
         await makePostRequestToApiThatReturnsJson('/api/account/sign-up', user)
@@ -190,7 +190,7 @@ describe('Integration testing the API', () => {
         )
     })
 
-    it('Lists order history', async () => {
+    xit('Lists order history', async () => {
         await signIn()
 
         const orderRequest = makeOrderRequest()
@@ -204,7 +204,7 @@ describe('Integration testing the API', () => {
         expect(returnedIds).to.include.members([order1.id, order2.id])
     })
 
-    it('Lists only order history for signed in user', async () => {
+    xit('Lists only order history for signed in user', async () => {
         await signIn()
 
         // Make an order as the default user
