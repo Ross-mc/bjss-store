@@ -1,5 +1,13 @@
 
-// array of order items to object of {id: quantity}
+// productService.checkStock() takes an object of the form {id: quantity}
+// but we get given Orders or baskets of the form [{productId, quantity}]
+// This function converts between the two. e.g.
+//
+// From                                    To
+//      [                                      {
+//         { productId: 13, quantity: 3 },        13: 3,   
+//         { productId: 42, quantity: 9 }         42: 9
+//      ]                                      }
 const orderItemsToStock = items =>
     items.reduce((obj, item) => Object.assign(obj, { [item.productId]: item.quantity }), {});
 
@@ -10,8 +18,6 @@ function NewOrderService(orderDb, productService) {
         basket.total = total
         return basket
     }
-
-
 
     async function createOrder(customerId, orderRequest) {
         const stockToCheck = orderItemsToStock(orderRequest.items)
