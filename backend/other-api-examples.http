@@ -1,0 +1,35 @@
+# Example API requests
+#
+# You can run these directly in VS Code by clicking on 'Send Request'
+# above each URL. Results will appear alongside.  You'll need to install
+# the rest-client extension:
+#
+#  code --install-extension humao.rest-client
+#
+# Three hashes is used to start a new request.
+
+# Get some triva about numbers 
+# API Docs here: http://numbersapi.com/
+###
+http://numbersapi.com/42/trivia?fragment
+
+
+# Cat facts.  Facts. About cats. 
+# This request has two parameters: animal_type and amount.  The second stops
+# us from being overwhelmed by too many cat facts (is this possible?), but
+# what is the first for?
+# https://alexwohlbruck.github.io/cat-facts/docs/endpoints/facts.html
+###
+https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=2
+
+
+# Books
+# API is slow, you may need patience. The %20 is how spaces are encoded in URLs. 
+# https://openlibrary.org/developers/api
+###
+http://openlibrary.org/search.json?author=Margaret%20Atwood
+
+# Song Lryics
+# Docs are awful. https://lyricsovh.docs.apiary.io/#
+### 
+https://api.lyrics.ovh/v1/Aretha%20Franklin/respect
