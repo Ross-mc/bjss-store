@@ -1,6 +1,12 @@
 
 function NewAccountApi(accountService) {
 
+    /**
+     * Use these functions to update the currently signed in user in the session
+     */
+    const getSignedInUserId = req => req.session.customerId
+    const setSignedInUserId = (req, customerId) => req.session.customerId = customerId
+
     async function postSignIn(req, res) {
         // To implement
     }

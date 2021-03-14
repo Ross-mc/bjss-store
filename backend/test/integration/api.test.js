@@ -99,7 +99,7 @@ describe('Integration testing the API', () => {
     })
 
     const checkNotSignedIn = async () =>
-        await makeGetRequestToApiThatReturnsJson('/api/order/history', 401)
+        await makeGetRequestToApiThatReturnsJson('/api/account', 401)
 
     // We use this later to check sign-in.
     // At the top we said mainly happy path testing, but negative security testing
@@ -109,7 +109,7 @@ describe('Integration testing the API', () => {
     )
 
     const checkSignedIn = async () =>
-        await makeGetRequestToApiThatReturnsJson('/api/order/history')
+        await makeGetRequestToApiThatReturnsJson('/api/account')
 
 
     // A single test for all signed in behaviour is poor.  
