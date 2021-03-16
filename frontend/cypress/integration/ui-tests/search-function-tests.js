@@ -5,7 +5,7 @@ context('Actions', () => {
 
     it('should check the title contains the brand name', () => {
         // Just checks the H1 and the first item in the product list
-        cy.get('h1').should('have.text', 'ACME Stores')
+        cy.get('h1').should('have.text', 'AMCE Stores')
     })
 
     it('should search for Raindrops on Roses and then add it to the basket', () => {
@@ -24,7 +24,7 @@ context('Actions', () => {
     })
 
     it('should search for Raindrops on doggies and not find anything', () => {
-        // Uses the search feature to search for 
+        // Uses the search feature to search for an item we know doesn't exist
         cy.get('#search').type('Raindrops on doggies')
         cy.get('[href="/search/query/Raindrops on doggies"] > .svg-inline--fa').click()
 
