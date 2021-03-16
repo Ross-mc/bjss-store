@@ -4,7 +4,6 @@ import "./App.css";
 import Home from "./pages/Home";
 import Basket from "./pages/Basket";
 import Login from "./pages/Login";
-import Checkout from "./pages/Checkout";
 import ProductSearch from "./pages/ProductSearch";
 import Payment from "./pages/Payment";
 import Redirect from "./pages/Redirect";
@@ -18,7 +17,6 @@ import store from './state/store';
 const routes = [
   { path: "/product-search", Component: ProductSearch },
   { path: "/search/:type/:query", Component: ProductSearch },
-  { path: "/checkout", Component: Checkout},
   { path: "/payment", Component: Payment},
   { path: "/basket", Component: Basket },
   { path: "/login", Component: Login },
