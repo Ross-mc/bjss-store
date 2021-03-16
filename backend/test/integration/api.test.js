@@ -113,14 +113,27 @@ describe('Integration testing the API', () => {
 
 
     // A single test for all signed in behaviour is poor.  
-    xit('signs up, is signed in', async () => {
-        await makePostRequestToApiThatReturnsJson(
+    xit('signs up, is signed in', async done => {
+
+        const newUser = await makePostRequestToApiThatReturnsJson(
             '/api/account/sign-up', makeTestUser('signup@example.com')
-        )
-        await checkSignedIn()
+        );
+        const signedIn = await checkSignedIn();
+        expect(newUser.id).to.not.be.undefined;
+        done();
+
     })
 
-    xit('Signs in', async () => {
+    it('Signs in', async () => {
+
+        // const products = await makeGetRequestToApiThatReturnsJson('/api/product/catalogue?category=1')
+
+        // expectListOfProducts(products)
+
+        // const allProducts = await listProducts()
+        // expect(products.length).to.be.lessThan(allProducts.length)
+
+
         const user = makeTestUser('signin@example.com')
         await makePostRequestToApiThatReturnsJson('/api/account/sign-up', user)
 
@@ -161,7 +174,7 @@ describe('Integration testing the API', () => {
         await checkNotSignedIn()
     })
 
-    xit('Gets/sets account', async () => {
+    it('Gets/sets account', async () => {
         const original = await signIn()
         const modified = await makePostRequestToApiThatReturnsJson('/api/account', { name: 'changed' })
 
