@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+context('Homepage tests, these are tests for the homepage and check that elements on this page are working as expected', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000')
     })

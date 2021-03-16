@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+context('Navigation tests for checking the navigation bar works and takes you to the right places', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000')
     })

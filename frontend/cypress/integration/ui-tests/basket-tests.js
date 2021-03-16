@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Actions', () => {
+context('Basket Tests, these tests are for checking the basket is correctly updated when adding or removing items', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000')
     })
@@ -33,7 +33,7 @@ context('Actions', () => {
     });
 })
 
-describe('This tests add some bits into the basket and then goes back and adds more into it', () => {
+describe('Basket test, this tests add some bits into the basket and then goes back and adds more into it', () => {
     it('should add an item and then check the basket and then go back and add another item', () => {
         cy.visit('http://localhost:3000')
 
@@ -63,7 +63,7 @@ describe('This tests add some bits into the basket and then goes back and adds m
     });
 })
 
-describe('This tests add some bits into the basket and then removes them and checks they are empty', () => {
+describe('Basket test, this tests add some bits into the basket and then removes them and checks they are empty', () => {
     it('should add items and then remove them', () => {
         cy.visit('http://localhost:3000')
 

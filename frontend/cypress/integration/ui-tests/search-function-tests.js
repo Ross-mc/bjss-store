@@ -1,4 +1,6 @@
-context('Actions', () => {
+/// <reference types="cypress" />
+
+context('Search page tests, these tests are for checking the search functions work as expected', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000')
     })
