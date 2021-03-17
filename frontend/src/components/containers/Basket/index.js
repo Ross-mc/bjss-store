@@ -3,11 +3,13 @@ import { removeFromBasket, getTotalPrice } from "../../../state/reducers/basketS
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
+ 
   const { basket } = state.basket;
+  const totalBasketPrice = parseFloat(getTotalPrice(basket)).toFixed(2);
   return {
     status: "succeeded",
     products: basket,
-    total: getTotalPrice(basket),
+    total: `£${totalBasketPrice}`,
     tileOrientation: "column"
   };
 };
