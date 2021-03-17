@@ -51,7 +51,7 @@ export default ({ product, addToBasket, removeFromBasket }) => {
       </div>
     </div>    
     <Modal isOpen={modalOpen} onAfterOpen={() => {console.log('MODAL OPEN')}} onRequestClose={() => {setModalOpen(false)}}>
-    <div className={styles.tileGrid}>
+      <div className={styles.tileGrid}>
         <div className={styles.imageContainer}>
           <FontAwesomeIcon icon={faCamera} />
         </div>
@@ -77,7 +77,10 @@ export default ({ product, addToBasket, removeFromBasket }) => {
       <button onClick={() => {
         setModalOpen(false)
         console.log(modalOpen) 
-        }}>Close</button>
+        }}
+      >
+        Close
+      </button>
     </Modal>
     </>
   );
