@@ -4,13 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 
 export default ({ product, addToBasket, removeFromBasket }) => {
+  const setActive = (event) => {
+    event.preventDefault()
+    console.log(event.target);
+  }
   return (
     <div className={styles.tile}>
       <div className={styles.tileGrid}>
         <div className={styles.imageContainer}>
           <FontAwesomeIcon icon={faCamera} />
         </div>
-        <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+        <a href="/" onClick={setActive}>
+          <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+        </a>
         <p className={styles.price}>£{product.price}</p>
         {product.quantity && (
           <p className={styles.quantity}>Quantity: {product.quantity}</p>
