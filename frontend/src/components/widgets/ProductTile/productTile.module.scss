@@ -13,7 +13,7 @@
     border: 1px solid $primaryBackground;
     margin: 12px;
     padding: 12px;
-    width: 100%;
+    width: 52%;
     color: $primaryBackground;
     display: inline-block;
 }
@@ -22,7 +22,14 @@
     display: grid;
     grid-template-columns:  1fr 1fr;
     grid-template-rows: auto auto auto auto;
+}
 
+.tileGridColumn {
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .imageContainer {
@@ -47,4 +54,6 @@
     @include buttonStyle;
     background-color: $secondaryCTA;
     color: $white;
+    width: 80%;
+    margin: 0 auto;
 }

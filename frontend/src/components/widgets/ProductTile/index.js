@@ -6,7 +6,7 @@ import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => {
   return (
     <div className={tileOrientation === "column" ? styles.tileColumn : styles.tile}>
-      <div className={styles.tileGrid}>
+      <div className={tileOrientation === "column" ? styles.tileGridColumn : styles.tileGrid}>
         <div className={styles.imageContainer}>
           <FontAwesomeIcon icon={faCamera} />
         </div>
