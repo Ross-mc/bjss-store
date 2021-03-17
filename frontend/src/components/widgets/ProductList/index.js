@@ -3,13 +3,14 @@ import ProductTile from "../ProductTile";
 import { Link } from 'react-router-dom';
 
 
-const renderProducts = (products, addToBasket, removeFromBasket) =>
+const renderProducts = (products, addToBasket, removeFromBasket, tileOrientation) =>
   products.map((product) => (
     <ProductTile
       product={product}
       addToBasket={addToBasket}
       removeFromBasket={removeFromBasket}
       key={product.id}
+      tileOrientation={tileOrientation}
     />
   ));
 
@@ -22,6 +23,7 @@ export default ({
   addToBasket,
   removeFromBasket,
   total,
+  tileOrientation
 }) => {
   useEffect(() => {
     if (status === "idle") {
@@ -34,7 +36,7 @@ export default ({
   } else {
     return (
       <div>
-        {renderProducts(products, addToBasket, removeFromBasket)}
+        {renderProducts(products, addToBasket, removeFromBasket, tileOrientation)}
         {total && (
           <React.Fragment>
             <br/>

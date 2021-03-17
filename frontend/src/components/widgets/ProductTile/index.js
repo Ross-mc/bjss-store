@@ -3,9 +3,9 @@ import styles from "./productTile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 
-export default ({ product, addToBasket, removeFromBasket }) => {
+export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => {
   return (
-    <div className={styles.tile}>
+    <div className={tileOrientation === "column" ? styles.tileColumn : styles.tile}>
       <div className={styles.tileGrid}>
         <div className={styles.imageContainer}>
           <FontAwesomeIcon icon={faCamera} />

@@ -9,6 +9,15 @@
     display: inline-block;
 }
 
+.tile-column{
+    border: 1px solid $primaryBackground;
+    margin: 12px;
+    padding: 12px;
+    width: 100%;
+    color: $primaryBackground;
+    display: inline-block;
+}
+
 .tileGrid {
     display: grid;
     grid-template-columns:  1fr 1fr;

@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     status: "succeeded",
     products: basket,
-    total: getTotalPrice(basket)
+    total: getTotalPrice(basket),
+    tileOrientation: "column"
   };
 };
 
