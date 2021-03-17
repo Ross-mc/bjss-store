@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 const mapStateToProps = (state) => {
  
   const { basket } = state.basket;
-  const totalBasketPrice = parseFloat(getTotalPrice(basket)).toFixed(2);
+  const totalBasketPrice = getTotalPrice(basket);
   return {
     status: "succeeded",
     products: basket,

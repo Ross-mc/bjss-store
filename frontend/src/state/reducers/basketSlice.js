@@ -35,6 +35,6 @@ export const { addToBasket, removeFromBasket, clearBasket } = basketSlice.action
 
 export const getBasketSize = basket => basket.reduce((acc, product) => acc += product.quantity, 0);
 
-export const getTotalPrice = basket => basket.reduce((acc, product) => acc += product.price * product.quantity, 0);
+export const getTotalPrice = basket => parseFloat(basket.reduce((acc, product) => acc += product.price * product.quantity, 0)).toFixed(2);
 
 export default basketSlice.reducer;
