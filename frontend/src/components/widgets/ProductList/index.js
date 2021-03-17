@@ -43,6 +43,7 @@ export default ({
             <hr />
             <div>Total: {total} </div>
             <Link to="/payment">Go to payment</Link> 
+            <Link to="/checkout">Go to checkout</Link> 
           </React.Fragment>
         )}
       </div>

@@ -7,12 +7,14 @@ import Login from "./pages/Login";
 import ProductSearch from "./pages/ProductSearch";
 import Payment from "./pages/Payment";
 import Redirect from "./pages/Redirect";
+import Checkout from "./pages/Checkout";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import Header from "./components/containers/Header";
 import store from './state/store';
+
 
 const routes = [
   { path: "/product-search", Component: ProductSearch },
@@ -21,8 +23,8 @@ const routes = [
   { path: "/basket", Component: Basket },
   { path: "/login", Component: Login },
   { path: "/redirect", Component: Redirect },
-  { path: "/", Component: Home },
-
+  { path: "/checkout", Component: Checkout},
+  { path: "/", Component: Home }  
 ];
 
 function App() {
