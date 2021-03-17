@@ -3,7 +3,7 @@ import { removeFromBasket, getTotalPrice } from "../../../state/reducers/basketS
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 
-import React from "react";
+import React, { useState } from "react";
 
 const mapStateToProps = (state) => {
  
@@ -91,11 +91,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 const Checkout = ({products, total}) => {
+    // const [success, setSuccess] = useState(false);
+    // const submitOrderHandler = () => {
+    //     setSuccess(true);
+    // }
+
     return (
         <div>
             <h2>Checkout</h2>
             <p>Total price is {total}</p>
-            <Link to="/payment">Go to payment</Link>
+            
             <form>
                 <h3>Order Form</h3>
                 <label for="name">Name: </label>
@@ -116,8 +121,22 @@ const Checkout = ({products, total}) => {
                     <h3 id="discount-header">Discount Codes Entered</h3>
                     <ol id="discount-list"></ol>
                 </div>
-                <button type="button" id="discount-btn" /*onclick={submitDiscountHandler}*/>Submit Discount Code</button>
-                <button type="button" id="order-btn" /*onclick={submitOrderHandler}*/>Order Button</button>
+                <Link to="/payment" /*onclick={submitDiscountHandler}*/ style={{
+                    backgroundColor: "#6ab04c",
+                    padding: "4px",
+                    borderRadius: "4px",
+                    color: "white",
+                    marginLeft: "5px",
+                    textDecoration: "none"
+                }}>Submit Discount Code</Link>
+                <Link to="/payment" style={{
+                    backgroundColor: "#3498db",
+                    padding: "4px",
+                    borderRadius: "4px",
+                    color: "white",
+                    marginLeft: "5px",
+                    textDecoration: "none"
+                }}>Go to payment</Link>
             </form>
         </div>
     )
