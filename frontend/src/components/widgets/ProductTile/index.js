@@ -5,6 +5,10 @@ import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import Modal from 'react-modal';
 
 export default ({ product, addToBasket, removeFromBasket }) => {
+  const setActive = (event) => {
+    event.preventDefault()
+    console.log(event.target);
+  }
   return (
     <div
       className={styles.tile}
@@ -16,7 +20,9 @@ export default ({ product, addToBasket, removeFromBasket }) => {
         <div className={styles.imageContainer}>
           <FontAwesomeIcon icon={faCamera} />
         </div>
-        <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+        <a href="/" onClick={setActive}>
+          <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+        </a>
         <p className={styles.price}>£{product.price}</p>
         {product.quantity && (
           <p className={styles.quantity}>Quantity: {product.quantity}</p>
