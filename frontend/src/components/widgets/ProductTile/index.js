@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import Modal from 'react-modal';
 
-export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => {
+export default ({ product, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct }) => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -35,6 +35,9 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
               <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
             </button>
           )}
+
+          {/* Basket  */}
+
           {removeFromBasket && (
             <button
               className={styles.secondaryButton}
@@ -46,6 +49,43 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
               Remove from Basket
             </button>
           )}
+
+          {reduceQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                reduceQuantity(product);
+              }}
+            >
+              Reduce Quantity
+            </button>
+          )}
+
+          {increaseQuantity && (
+            <button
+              className={styles.cta}
+              onClick={(e) => {
+                e.stopPropagation();
+                increaseQuantity(product);
+              }}
+            >
+              <FontAwesomeIcon icon={faShoppingBasket} /> Increase Quantity
+            </button>
+          )}
+
+          {clearBasketProduct && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                clearBasketProduct(product);
+              }}
+            >
+              Remove Product
+            </button>
+          )}
+
         </div>
       </div>
       <Modal isOpen={modalOpen} onAfterOpen={() => { console.log('MODAL OPEN') }} onRequestClose={() => { setModalOpen(false) }}>

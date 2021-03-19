@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import ProductTile from "../ProductTile";
 import { Link } from 'react-router-dom';
+import { clearBasketProduct } from "../../../state/reducers/basketSlice";
 
 
-const renderProducts = (products, addToBasket, removeFromBasket, tileOrientation) =>
+const renderProducts = (products, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct) =>
   products.map((product) => (
     <ProductTile
       product={product}
@@ -11,6 +12,9 @@ const renderProducts = (products, addToBasket, removeFromBasket, tileOrientation
       removeFromBasket={removeFromBasket}
       key={product.id}
       tileOrientation={tileOrientation}
+      increaseQuantity={increaseQuantity}
+      reduceQuantity={reduceQuantity}
+      clearBasketProduct={clearBasketProduct}
     />
   ));
 
@@ -23,7 +27,10 @@ export default ({
   addToBasket,
   removeFromBasket,
   total,
-  tileOrientation
+  tileOrientation,
+  increaseQuantity,
+  reduceQuantity,
+  clearBasketProduct
 }) => {
   useEffect(() => {
     if (status === "idle") {
@@ -36,7 +43,7 @@ export default ({
   } else {
     return (
       <div>
-        {renderProducts(products, addToBasket, removeFromBasket, tileOrientation)}
+        {renderProducts(products, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct)}
         {total && (
           <React.Fragment>
             <br/>

@@ -1,5 +1,5 @@
 import ProductList from "../../widgets/ProductList";
-import { removeFromBasket, getTotalPrice, addToBasket } from "../../../state/reducers/basketSlice";
+import { removeFromBasket, getTotalPrice, addToBasket, clearBasketProduct } from "../../../state/reducers/basketSlice";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
@@ -15,11 +15,17 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeFromBasket: (product) => {
+  reduceQuantity: (product) => {
     dispatch(removeFromBasket(product));
   },
-  addToBasket: (product) => {
-    dispatch(addToBasket(product))
+  // addToBasket: (product) => {
+  //   dispatch(addToBasket(product))
+  // }
+  increaseQuantity: (product) => {
+    dispatch(addToBasket(product));
+  },
+  clearBasketProduct: (product) => {
+    dispatch(clearBasketProduct(product));
   }
 });
 
