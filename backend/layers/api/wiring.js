@@ -14,10 +14,16 @@ const NewOrderService = require('../business-logic/order').NewOrderService
 const dataAccessLayer = require('../data-access')
 
 async function wire(express) {
+    const corsOptions = {
+        origin: 'http://localhost:3000',
+        credentials: true,
+    
+    }
 
     const app = express()
     app.use(express.json()) // Parse JSON request bodies automagically
-    app.use(cors()) // Allow a UI laoded from any server to call us, but note OWASP Top 10 #6
+    app.use(cors(corsOptions)) // Allow a UI laoded from any server to call us, but note OWASP Top 10 #6
+    
 
     // Adds a session object to the request. As configured this won't get stored
     // in a database, so all session info is lost when we restart the server. 

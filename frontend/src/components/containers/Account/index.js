@@ -13,24 +13,24 @@ class Account extends React.Component {
     componentDidMount() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Cookie", "connect.sid=s%3ADSyMF850iT1JlUofh-VVsDGxTjJCzzmH.y58Nebg1BMYqBju4pnB0TmKMNmhL8aQRL6Ns%2FRjvdjw");
+        // myHeaders.append("Cookie", "connect.sid=s%3A5Njnx9NChxrhW30xfyoLJ-M8w97NLfsP.cs4M2mBBDwRVAhH5aDZdG8v8b%2FrUK5zwyiShkPErnio");
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
-            redirect: 'follow'
+            redirect: 'follow',
+            credentials: 'include',
+            'Access-Control-Allow-Origin': 'http://localhost:3000' 
         };
-        console.log(this.checkCookie())
-        // fetch("http://localhost:4001/api/account", requestOptions)
-        //     .then(response => {
-        //         console.log(response)
-        //         if (response.status === 200) {
-        //            return response.text()
-        //         }
+        fetch("http://localhost:4001/api/account", requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                   return response.text()
+                }
 
-        //     }).then(result =>{
-        //         console.log(result)
-        //         this.setState({name: result.name, address: result.address, postcode: result.postcode, email: result.email })
-        //     })
+            }).then(result =>{
+                const json = JSON.parse(result)
+                this.setState({name: json.name, address: json.address, postcode: json.postcode, email: json.email })
+            })
     }
 
     getCookie(cname) {
