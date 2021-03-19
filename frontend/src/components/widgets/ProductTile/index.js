@@ -20,6 +20,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
             <FontAwesomeIcon icon={faCamera} />
           </div>
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+          <h5>Quantity remaining: {product.stock}</h5>
           <p className={styles.price}>£{product.price}</p>
           {product.quantity && (
             <p className={styles.quantity}>Quantity: {product.quantity}</p>

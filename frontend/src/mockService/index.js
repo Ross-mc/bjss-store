@@ -11,6 +11,7 @@ const store = [
     price: 9.99,
     category: 1,
     deal: true,
+    stock: 10
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ const store = [
     price: 3.79,
     category: 1,
     deal: true,
+    stock: 25
   },
   {
     id: 3,
@@ -29,6 +31,7 @@ const store = [
     price: 19.99,
     category: 3,
     deal: true,
+    stock: 15
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ const store = [
     price: 7.99,
     category: 2,
     deal: true,
+    stock: 8
   },
 ];
 
