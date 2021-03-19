@@ -21,9 +21,9 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
             <img width="100" height="87"  src={`${product.image}`}></img>
           </div>
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
-          <h5>Quantity remaining: 
+          <h5>
           
-          {product.stock? <p>{product.stock}</p>: <p>Out of stock</p>  }
+            {product.stock ? <p>Quantity remaining: {product.stock}</p> : <p>Out of stock</p>  }
           
           </h5>
 
