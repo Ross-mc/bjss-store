@@ -9,6 +9,14 @@
     display: inline-block;
 }
 
+img {
+    display: block;
+    max-width:230px;
+    max-height:95px;
+    width: auto;
+    height: auto;
+}
+
 .tile-column{
     border: 1px solid $primaryBackground;
     margin: 12px;
@@ -49,6 +57,13 @@
     background-color: $callToAction;
     color: $white;
 }
+.cta:disabled{
+    background-color: gray;
+}
+
+.cta:hover {
+    cursor: pointer;
+}
 
 .secondaryButton {
     @include buttonStyle;
@@ -58,10 +73,3 @@
     margin: 0 auto;
 }
 
-.tertiaryButton {
-    background-color: gold;
-    color: $white;
-    width: 30%;
-    margin: 0 auto;
-    grid-column: 2;
-}

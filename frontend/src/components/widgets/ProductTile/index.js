@@ -17,15 +17,24 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
         <div className={tileOrientation === "column" ? styles.tileGridColumn : styles.tileGrid}>
 
           <div className={styles.imageContainer}>
-            <FontAwesomeIcon icon={faCamera} />
+            {/* <FontAwesomeIcon icon={faCamera} /> */}
+            <img width="100" height="87"  src={`${product.image}`}></img>
           </div>
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+          <h5>
+          
+            {product.stock ? <p>Quantity remaining: {product.stock}</p> : <p>Out of stock</p>  }
+          
+          </h5>
+
           <p className={styles.price}>£{product.price}</p>
           {product.quantity && (
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
+
           {addToBasket && (
             <button
+              disabled={!product.stock}
               className={styles.cta}
               onClick={(e) => {
                 e.stopPropagation();
@@ -101,7 +110,11 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
           {addToBasket && (
-            <button className={styles.cta} onClick={() => addToBasket(product)}>
+            <button
+              className={styles.cta}
+              onClick={() => addToBasket(product)}
+              disabled={!product.stock}
+            >
               <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
             </button>
           )}
