@@ -27,6 +27,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
           )}
           {addToBasket && (
             <button
+              disabled={!product.stock}
               className={styles.cta}
               onClick={(e) => {
                 e.stopPropagation();
@@ -60,7 +61,11 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
           {addToBasket && (
-            <button className={styles.cta} onClick={() => addToBasket(product)}>
+            <button
+              className={styles.cta}
+              onClick={() => addToBasket(product)}
+              disabled={!product.stock}
+            >
               <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
             </button>
           )}

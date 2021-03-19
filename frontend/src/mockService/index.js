@@ -11,7 +11,7 @@ const store = [
     price: 9.99,
     category: 1,
     deal: true,
-    stock: 10
+    stock: 0
   },
   {
     id: 2,
