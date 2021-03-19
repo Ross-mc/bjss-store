@@ -54,6 +54,14 @@
     @include buttonStyle;
     background-color: $secondaryCTA;
     color: $white;
-    width: 80%;
+    width: 15%;
     margin: 0 auto;
+}
+
+.tertiaryButton {
+    background-color: gold;
+    color: $white;
+    width: 30%;
+    margin: 0 auto;
+    grid-column: 2;
 }

@@ -50,6 +50,18 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
             </button>
           )}
 
+          {increaseQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                increaseQuantity(product);
+              }}
+            >
+              +
+            </button>
+          )}
+
           {reduceQuantity && (
             <button
               className={styles.secondaryButton}
@@ -58,25 +70,15 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
                 reduceQuantity(product);
               }}
             >
-              Reduce Quantity
+              -
             </button>
           )}
 
-          {increaseQuantity && (
-            <button
-              className={styles.cta}
-              onClick={(e) => {
-                e.stopPropagation();
-                increaseQuantity(product);
-              }}
-            >
-              <FontAwesomeIcon icon={faShoppingBasket} /> Increase Quantity
-            </button>
-          )}
+          
 
           {clearBasketProduct && (
             <button
-              className={styles.secondaryButton}
+              className={styles.tertiaryProduct}
               onClick={(e) => {
                 e.stopPropagation();
                 clearBasketProduct(product);
@@ -103,14 +105,52 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
               <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
             </button>
           )}
-          {removeFromBasket && (
+
+          {/* Basket */}
+
+          {/* {removeFromBasket && (
             <button
               className={styles.secondaryButton}
               onClick={() => removeFromBasket(product)}
             >
               Remove from Basket
             </button>
+          )} */}
+
+
+          {removeFromBasket && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                removeFromBasket(product);
+              }}
+            >
+              Remove from Basket
+            </button>
           )}
+
+          {increaseQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                increaseQuantity(product);
+              }}
+            >
+              +
+            </button>
+          )}
+
+          {reduceQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                reduceQuantity(product);
+              }}
+            >
+              -
+            </button>
+          )}
+
         </div>
         <button onClick={() => {
           setModalOpen(false)
