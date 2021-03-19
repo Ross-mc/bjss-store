@@ -22,7 +22,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
           <h5>Quantity remaining: 
           
-          {product.stock? <p>{product.stock}</p>: <p>out of stock</p>  }
+          {product.stock? <p>{product.stock}</p>: <p>Out of stock</p>  }
           
           </h5>
 

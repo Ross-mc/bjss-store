@@ -49,6 +49,9 @@
     background-color: $callToAction;
     color: $white;
 }
+.cta:disabled{
+    background-color: gray;
+}
 
 .secondaryButton {
     @include buttonStyle;
@@ -57,3 +60,4 @@
     width: 80%;
     margin: 0 auto;
 }
+
