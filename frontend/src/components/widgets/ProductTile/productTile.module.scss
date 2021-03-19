@@ -9,6 +9,14 @@
     display: inline-block;
 }
 
+img {
+    display: block;
+    max-width:230px;
+    max-height:95px;
+    width: auto;
+    height: auto;
+  }
+
 .tile-column{
     border: 1px solid $primaryBackground;
     margin: 12px;
