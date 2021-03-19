@@ -23,7 +23,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
           <h5>
           
-            {product.stock ? <p>Quantity remaining: {product.stock}</p> : <p>Out of stock</p>  }
+            {product.quantityRemaining ? <p>Quantity remaining: {product.quantityRemaining}</p> : <p>Out of Stock</p>  }
           
           </h5>
 
@@ -34,7 +34,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
 
           {addToBasket && (
             <button
-              disabled={!product.stock}
+              disabled={!product.quantityRemaining}
               className={styles.cta}
               onClick={(e) => {
                 e.stopPropagation();
@@ -113,7 +113,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
             <button
               className={styles.cta}
               onClick={() => addToBasket(product)}
-              disabled={!product.stock}
+              disabled={!product.quantityRemaining}
             >
               <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
             </button>

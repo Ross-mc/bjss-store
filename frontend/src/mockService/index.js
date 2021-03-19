@@ -55,8 +55,12 @@ const categories = [
 ]
 
 export const getTodaysDeals = async () => {
-  await wait(500);
-  return store.filter((product) => product.deal);
+  // await wait(500);
+  // return store.filter((product) => product.deal);
+  // return fetch("http://localhost:4001/api/product/deals").then(res => res.json()).then(data => data)
+  const items = fetch("http://localhost:4001/api/product/deals").then(res => res.json()).then(data => data ).catch(e => console.log(e));
+  console.log(items);
+  return items;
 };
 
 export const getProductsForCategory = async (category) => {
