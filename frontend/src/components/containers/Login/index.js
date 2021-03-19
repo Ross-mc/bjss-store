@@ -66,18 +66,24 @@ import React, { useState } from "react";
         <div>
           <form>
             <h3>Log In</h3>
-            <label for="email">Email: </label>
+            <div className="form-group">
+            <label className="lead" for="email">Email: </label>
+            <div className="col-sm-20">
             <input type="email" name="email" id="email" onChange={(event) => this.handleChange(event, 'email')} value={this.state.email}/>
-            
-            <label for="password">Password: </label>
+            </div></div>
+            <div className="form-group">
+            <label className="lead" for="password">Password: </label>
+            <div className="col-sm-20">
             <input type="password" name="name" id="password" onChange={(event) => this.handleChange(event, 'password')} value={this.state.password}/>
+            </div></div>
             {/* <p class="validation" id="name-validation"></p> */}
-            <button type="button" onClick={this.submitLoginHandler}>Sign In</button>
+            <button type="button" className="btn btn-dark" onClick={this.submitLoginHandler}>Sign In</button>
             <div className={this.state.loginFailed ? "alert alert-danger" : "d-none"} role="alert">
                  Invalid Login!
             </div>
     
           </form>
+          <p class="lead">Not Registered? Click <Link to="/registration">here</Link></p>
         </div>
       )
     }
