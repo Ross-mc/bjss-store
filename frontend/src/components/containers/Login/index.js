@@ -10,21 +10,38 @@ class Login extends React.Component {
         loginFailed: false
     };
     componentDidMount() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Cookie", "connect.sid=s%3ADSyMF850iT1JlUofh-VVsDGxTjJCzzmH.y58Nebg1BMYqBju4pnB0TmKMNmhL8aQRL6Ns%2FRjvdjw");
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      // myHeaders.append("Cookie", "connect.sid=s%3A5Njnx9NChxrhW30xfyoLJ-M8w97NLfsP.cs4M2mBBDwRVAhH5aDZdG8v8b%2FrUK5zwyiShkPErnio");
+      var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow',
+          credentials: 'include',
+          'Access-Control-Allow-Origin': 'http://localhost:3000' 
+      };
+      fetch("http://localhost:4001/api/account", requestOptions)
+          .then(response => {
+              if (response.status === 200) {
+                 return window.location.href = "/account"
+              }
 
-        fetch("http://localhost:4001/api/account", requestOptions)
-            .then(response => {
-                if (response.status === 200) {
-                    return window.location.href = '/account'
-                }
-            })
+          })
+        // var myHeaders = new Headers();
+        // myHeaders.append("Content-Type", "application/json");
+        // // myHeaders.append("Cookie", "connect.sid=s%3ADSyMF850iT1JlUofh-VVsDGxTjJCzzmH.y58Nebg1BMYqBju4pnB0TmKMNmhL8aQRL6Ns%2FRjvdjw");
+        // var requestOptions = {
+        //     method: 'GET',
+        //     headers: myHeaders,
+        //     redirect: 'follow'
+        // };
+
+        // fetch("http://localhost:4001/api/account", requestOptions)
+        //     .then(response => {
+        //         if (response.status === 200) {
+        //             return window.location.href = '/account'
+        //         }
+        //     })
     }
 
 
@@ -43,7 +60,8 @@ class Login extends React.Component {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Cookie", "connect.sid=s%3ADSyMF850iT1JlUofh-VVsDGxTjJCzzmH.y58Nebg1BMYqBju4pnB0TmKMNmhL8aQRL6Ns%2FRjvdjw");
+        myHeaders.append("withCredentials", true)
+        // myHeaders.append("Cookie", "connect.sid=s%3ADSyMF850iT1JlUofh-VVsDGxTjJCzzmH.y58Nebg1BMYqBju4pnB0TmKMNmhL8aQRL6Ns%2FRjvdjw");
         const raw = JSON.stringify({
             "email": this.state.email,
             "name": this.state.name,
@@ -61,7 +79,9 @@ class Login extends React.Component {
 
         fetch("http://localhost:4001/api/account/sign-in", requestOptions)
             .then(response => {
+              console.log(response.headers)
                 if (response.status === 200) {
+                  console.log(response)
                     return response.text()
                 } else {
                     return "invalid Login Credentials"
@@ -71,6 +91,7 @@ class Login extends React.Component {
                 if (result === "invalid Login Credentials") {
                     this.setState({ loginFailed: true })
                 } else {
+                  console.log(result)
                     window.location.href = '/'
                 }
             })
