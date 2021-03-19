@@ -15,7 +15,7 @@ img {
     max-height:95px;
     width: auto;
     height: auto;
-  }
+}
 
 .tile-column{
     border: 1px solid $primaryBackground;
@@ -59,6 +59,10 @@ img {
 }
 .cta:disabled{
     background-color: gray;
+}
+
+.cta:hover {
+    cursor: pointer;
 }
 
 .secondaryButton {
