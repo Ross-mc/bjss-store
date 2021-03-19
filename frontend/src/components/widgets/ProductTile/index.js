@@ -25,6 +25,10 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation }) => 
           {product.quantity && (
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
+          {product.stock == 0 && (
+            <p> Out of stock </p>
+            
+          )}
           {addToBasket && (
             <button
               disabled={!product.stock}
