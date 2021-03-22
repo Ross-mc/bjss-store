@@ -1,0 +1,69 @@
+@import '../../../styles/colours';
+
+@mixin tileStyle {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 12px;
+    padding: 12px;
+    width: 300px;
+    color: $primaryBackground;
+}
+
+.tile {
+    @include tileStyle;
+    display: inline-block;
+}
+
+.basketTile {
+    @include tileStyle;
+    display: block;
+    position: relative;
+    margin: 12px auto;
+    width: 100%;
+}
+
+.tileGrid {
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+
+}
+
+.imageContainer {
+    font-size: 100px;
+    grid-row: 1 / 3;
+}
+
+@mixin buttonStyle {
+    grid-column: 2;
+    padding: 10px;
+    border-radius: 3px;   
+}
+
+.cta {
+    @include buttonStyle;
+    border: 1px solid $pink;
+    background-color: $pink;
+    color: $black;
+}
+
+.ctaNo {
+    @include buttonStyle;
+    background-color:$lightGrey;
+    border: 1px solid $lightGrey;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.cta:hover, .secondaryButton:hover {
+    cursor: pointer;
+}
+
+
+.secondaryButton {
+    @include buttonStyle;
+    border: 1px solid $darkGrey;
+    background-color: $darkGrey;
+    color: $white;
+    width: 150px;
+    margin-left: 245px;
+}

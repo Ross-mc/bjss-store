@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "better-sqlite3": "^7.1.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "*",
+    "express": "*",
+    "express-session": "*",
+    "swagger-ui-express": "*",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "test": "mocha test/unit/**/*.js",
+    "test-all": "mocha test/**/*.js",
+    "test-watch": "mocha test/unit/**/*.js --watch",
+    "integration-test-watch": "mocha test/integration/**/*.js --watch",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "private": true
+}

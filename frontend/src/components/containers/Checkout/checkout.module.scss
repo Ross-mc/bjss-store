@@ -1,0 +1,67 @@
+@import '../../../styles/colours';
+
+.main {
+    width: 100%;
+    color: $primaryBackground;
+    display: inline-block;
+    text-align: center;
+}
+.fieldsForm {
+    width: 250px;
+    margin-right: 50px;
+    background-color: rgba(255,255,255,0.3);
+    transition: 0.3s all;
+  }
+
+  .labelsForm {
+    margin-left: 10px;
+  }
+  
+.grid {
+    width: 100%;
+    padding: 2%;
+}
+
+.split {
+    display: inline-block;
+    width: 40%;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    width: 40%;
+    margin: 2%;
+    padding: 2%;  
+}
+
+.split h3 {
+    margin-top: 0;
+}
+
+.flex {
+    width: 100%;
+}
+
+.flex button {
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid $pink;
+    background-color: $pink;
+    color: $black;
+    width: 20%;
+}
+
+.flex button:hover {
+    cursor: pointer;
+}
+
+.flex hr {
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cancel {
+    margin-right: 2%
+}
+
+.proceed {
+    margin-left: 2%
+}
