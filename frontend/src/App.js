@@ -2,11 +2,14 @@ import React from "react";
 import "./App.css";
 
 import Home from "./pages/Home";
+import Account from "./pages/Account";
 import Basket from "./pages/Basket";
 import Login from "./pages/Login";
-import Checkout from "./pages/Checkout";
 import ProductSearch from "./pages/ProductSearch";
 import Payment from "./pages/Payment";
+import Redirect from "./pages/Redirect";
+import Checkout from "./pages/Checkout";
+import Registration from "./pages/Registration";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -14,15 +17,19 @@ import { Provider } from "react-redux";
 import Header from "./components/containers/Header";
 import store from './state/store';
 
+
+
 const routes = [
   { path: "/product-search", Component: ProductSearch },
   { path: "/search/:type/:query", Component: ProductSearch },
-  { path: "/checkout", Component: Checkout},
   { path: "/payment", Component: Payment},
   { path: "/basket", Component: Basket },
   { path: "/login", Component: Login },
-  { path: "/", Component: Home },
-
+  { path: "/redirect", Component: Redirect },
+  { path: "/checkout", Component: Checkout},
+  { path: "/registration", Component: Registration},
+  { path: "/account", Component: Account},
+  { path: "/", Component: Home }  
 ];
 
 function App() {

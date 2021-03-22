@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
+import {Link} from "react-router-dom";
 
 const Payment = () => {
     return (
-      <h1>Third Party Payment thing</h1>
+      <div>
+        <h1>Third Party Payment thing</h1>
+        <p>Go back to <Link to="/redirect?url=/">home</Link></p>
+      </div>
     );
   }
   
   export default Payment;
-  
