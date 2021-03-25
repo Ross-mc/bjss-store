@@ -27,7 +27,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
           
           </h5>
 
-          <p className={styles.price}>£{product.price}</p>
+          <p className={styles.price}>£{parseFloat(product.price).toFixed(2)}</p>
           {product.quantity && (
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
