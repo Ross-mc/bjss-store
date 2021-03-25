@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 
 import Home from "./pages/Home";
+import Account from "./pages/Account";
 import Basket from "./pages/Basket";
 import Login from "./pages/Login";
 import ProductSearch from "./pages/ProductSearch";
@@ -27,6 +28,7 @@ const routes = [
   { path: "/redirect", Component: Redirect },
   { path: "/checkout", Component: Checkout},
   { path: "/registration", Component: Registration},
+  { path: "/account", Component: Account},
   { path: "/", Component: Home }  
 ];
 

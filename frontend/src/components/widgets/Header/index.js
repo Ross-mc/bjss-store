@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
 import IconLink from "../../elements/iconElements/IconLink";
@@ -42,6 +42,12 @@ export default ({
           type="text"
           className={styles.searchBar}
           onChange={(event) => setSearchQuery(event.target.value)}
+          onKeyPress={(event) => {  
+            if (event.key === 'Enter') {
+              window.location.href = `/search/query/${searchQuery}`
+            }
+          }
+          }         
         />
       </span>
       <IconLink icon={icons.SEARCH} target={searchQuery.length ? `/search/query/${searchQuery}`: undefined } />

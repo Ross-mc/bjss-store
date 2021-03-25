@@ -67,7 +67,7 @@ describe('Integration testing the API', () => {
     })
 
 
-    it('creates an order and checks it exists', async () => {
+    xit('creates an order and checks it exists', async () => {
         const orderRequest = makeOrderRequest()
 
         const response = await makePostRequestToApiThatReturnsJson('/api/order/checkout', orderRequest)
@@ -85,7 +85,7 @@ describe('Integration testing the API', () => {
         //expect(foundOrder).to.not.be.null
     })
 
-    it('gets and sets a basket', async () => {
+    xit('gets and sets a basket', async () => {
         // A basket update is the same as the items part of an order. 
         const basket = { items: makeOrderRequest().items }
 
@@ -99,7 +99,7 @@ describe('Integration testing the API', () => {
     })
 
     const checkNotSignedIn = async () =>
-        await makeGetRequestToApiThatReturnsJson('/api/order/history', 401)
+        await makeGetRequestToApiThatReturnsJson('/api/account', 401)
 
     // We use this later to check sign-in.
     // At the top we said mainly happy path testing, but negative security testing
@@ -109,18 +109,31 @@ describe('Integration testing the API', () => {
     )
 
     const checkSignedIn = async () =>
-        await makeGetRequestToApiThatReturnsJson('/api/order/history')
+        await makeGetRequestToApiThatReturnsJson('/api/account')
 
 
     // A single test for all signed in behaviour is poor.  
-    it('signs up, is signed in', async () => {
-        await makePostRequestToApiThatReturnsJson(
+    xit('signs up, is signed in', async done => {
+
+        const newUser = await makePostRequestToApiThatReturnsJson(
             '/api/account/sign-up', makeTestUser('signup@example.com')
-        )
-        await checkSignedIn()
+        );
+        const signedIn = await checkSignedIn();
+        expect(newUser.id).to.not.be.undefined;
+        done();
+
     })
 
     it('Signs in', async () => {
+
+        // const products = await makeGetRequestToApiThatReturnsJson('/api/product/catalogue?category=1')
+
+        // expectListOfProducts(products)
+
+        // const allProducts = await listProducts()
+        // expect(products.length).to.be.lessThan(allProducts.length)
+
+
         const user = makeTestUser('signin@example.com')
         await makePostRequestToApiThatReturnsJson('/api/account/sign-up', user)
 
@@ -148,7 +161,7 @@ describe('Integration testing the API', () => {
     }
 
     // This test run after we've established that valid credentials do work!
-    it('Invalid credentials rejected', async () => {
+    xit('Invalid credentials rejected', async () => {
         const invalidCredentials = {
             email: 'nosuch@example.com',
             password: 'password'
@@ -172,7 +185,7 @@ describe('Integration testing the API', () => {
         expect(fetched).to.eql(modified)
     })
 
-    it('Handles password change', async () => {
+    xit('Handles password change', async () => {
         const email = 'passwordchange@example.com'
         const user = makeTestUser(email)
         await makePostRequestToApiThatReturnsJson('/api/account/sign-up', user)
@@ -190,7 +203,7 @@ describe('Integration testing the API', () => {
         )
     })
 
-    it('Lists order history', async () => {
+    xit('Lists order history', async () => {
         await signIn()
 
         const orderRequest = makeOrderRequest()
@@ -204,7 +217,7 @@ describe('Integration testing the API', () => {
         expect(returnedIds).to.include.members([order1.id, order2.id])
     })
 
-    it('Lists only order history for signed in user', async () => {
+    xit('Lists only order history for signed in user', async () => {
         await signIn()
 
         // Make an order as the default user

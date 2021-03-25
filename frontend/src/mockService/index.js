@@ -55,27 +55,38 @@ const categories = [
 ]
 
 export const getTodaysDeals = async () => {
-  await wait(500);
-  return store.filter((product) => product.deal);
+  return fetch("http://localhost:4001/api/product/deals").then(res => res.json()).then(data => data ).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
 
 export const getProductsForCategory = async (category) => {
-  await wait(500);
-  return store.filter((product) => `${product.category}` === category);
+  return fetch(`http://localhost:4001/api/product/catalogue?category=${category}`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
 
 export const getProductSearch = async (searchString) => {
   const trimmedSearch = searchString.trim().toLowerCase();
-  await wait(500);
 
-  const results = store.filter(
-    (product) =>
-      product.shortDescription.toLowerCase().includes(trimmedSearch) ||
-      product.longDescription.toLowerCase().includes(trimmedSearch)
-  );
-  return results;
+  return fetch(`http://localhost:4001/api/product/catalogue?search=${trimmedSearch}`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
+
+  // const results = store.filter(
+  //   (product) =>
+  //     product.shortDescription.toLowerCase().includes(trimmedSearch) ||
+  //     product.longDescription.toLowerCase().includes(trimmedSearch)
+  // );
+  // return results;
 };
 
 export const getProductCategories = async () => {
-  return categories;
+  return fetch(`http://localhost:4001/api/product/categories`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
