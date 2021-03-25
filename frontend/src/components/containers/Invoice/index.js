@@ -64,6 +64,7 @@ export default () => {
         }).then(res => res.json()).then(result => {
             const parsedResult = parseText(result);
             setResultsFromParsedTextract({...resultsFromTextract, ...parsedResult})
+            
         })
     }
 
@@ -95,6 +96,7 @@ export default () => {
             {
                 images.length > 0
                     ? images.map((imageObj, i) => {
+                        
                         return (
                             <div style={{width: "80%", margin: "0 auto", textAlign: "center"}} key={i}>
                                 <img
@@ -113,6 +115,7 @@ export default () => {
             }
             <form className={resultsFromTextract["quantity"] === "" ? "d-none" : "container"}>
                     {Object.entries(resultsFromTextract).map(kvp => {
+                        // console.log(Object.entries(resultsFromTextract))
                         return (
                             <div className="form-group">
                                 <label for={kvp[0]}>{kvp[0]}</label>

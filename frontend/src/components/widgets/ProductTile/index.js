@@ -105,7 +105,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
             <FontAwesomeIcon icon={faCamera} />
           </div>
           <h3 className={styles.shortDescription}>{product.longDescription}</h3>
-          <p className={styles.price}>£{product.price}</p>
+          <p className={styles.price}>£{parseFloat(product.price).toFixed(2)}</p>
           {product.quantity && (
             <p className={styles.quantity}>Quantity: {product.quantity}</p>
           )}
