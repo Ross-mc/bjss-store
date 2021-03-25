@@ -55,12 +55,17 @@ const categories = [
 ]
 
 export const getTodaysDeals = async () => {
-  return fetch("http://localhost:4001/api/product/deals").then(res => res.json()).then(data => data ).catch(e => console.log(e));
+  return fetch("http://localhost:4001/api/product/deals").then(res => res.json()).then(data => data ).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
 
 export const getProductsForCategory = async (category) => {
-  await wait(500);
-  return store.filter((product) => `${product.category}` === category);
+  return fetch(`http://localhost:4001/api/product/catalogue?category=${category}`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
 
 export const getProductSearch = async (searchString) => {
