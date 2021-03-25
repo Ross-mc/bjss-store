@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import ProductTile from "../ProductTile";
-import styles from "./productList.module.scss";
-import style2 from "../ProductTile/productTile.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
+import { clearBasketProduct } from "../../../state/reducers/basketSlice";
 
-const renderProducts = (
-  products,
-  addToBasket,
-  removeFromBasket,
-  setSelectedProduct
-) =>
+
+const renderProducts = (products, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct) =>
   products.map((product) => (
     <ProductTile
       product={product}
       addToBasket={addToBasket}
       removeFromBasket={removeFromBasket}
       key={product.id}
-      setSelectedProduct={setSelectedProduct}
+      tileOrientation={tileOrientation}
+      increaseQuantity={increaseQuantity}
+      reduceQuantity={reduceQuantity}
+      clearBasketProduct={clearBasketProduct}
     />
   ));
 
@@ -31,9 +27,11 @@ export default ({
   addToBasket,
   removeFromBasket,
   total,
+  tileOrientation,
+  increaseQuantity,
+  reduceQuantity,
+  clearBasketProduct
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
   useEffect(() => {
     if (status === "idle") {
       loadProducts();
@@ -44,62 +42,18 @@ export default ({
     return loadingPlaceholder();
   } else {
     return (
-      <div className={styles.list}>
-        {removeFromBasket &&
-          <h1>Your Basket</h1>
-        }
-        {renderProducts(
-          products,
-          addToBasket,
-          removeFromBasket,
-          setSelectedProduct
-        )}
+      <div>
+        {renderProducts(products, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct)}
         {total && (
-          
           <React.Fragment>
-            
-            <div className={styles.total} id="totalCost">
-              <br />
-              <hr />
-              <p>Total: {total.toFixed(2)}</p>
-              <Link to="/checkout">
-                <button className={styles.checkoutButton}>Checkout</button>
-              </Link>
-              
-              <br />
-            </div>
+            <br/>
+            <hr />
+            <div>Total: {total} </div>
+            {/* <Link to="/payment">Go to payment</Link>  */}
+            <Link to="/checkout">Go to checkout</Link> 
           </React.Fragment>
-        )}
-        {selectedProduct && (
-          <ProductModal
-            {...selectedProduct}
-            handleClose={() => setSelectedProduct(null)}
-          />
         )}
       </div>
     );
   }
 };
-
-const ProductModal = ({
-  shortDescription,
-  longDescription,
-  price,
-  categoryName,
-  handleClose,
-}) => {
-  return (
-    <div className={styles.popupBox}>
-      <div className={styles.box}>
-        <div className={style2.imageContainer}>
-          <FontAwesomeIcon icon={faCamera} />
-        </div>
-        <h3>{shortDescription}</h3>
-        <p>{longDescription}</p>
-        <p className={styles.thick}> £ {price}</p>
-        <span onClick={handleClose} className={styles.closeIcon}>x</span>
-      </div>
-    </div>
-  );
-};
-

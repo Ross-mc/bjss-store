@@ -11,6 +11,8 @@ const store = [
     price: 9.99,
     category: 1,
     deal: true,
+    stock: 0,
+    image: 'https://acma-bucket.s3.eu-west-2.amazonaws.com/public/647946-spring-raindrops-on-roses.jpg'
   },
   {
     id: 2,
@@ -20,6 +22,8 @@ const store = [
     price: 3.79,
     category: 1,
     deal: true,
+    stock: 25,
+    image: 'https://acma-bucket.s3.eu-west-2.amazonaws.com/public/kittens.jpg'
   },
   {
     id: 3,
@@ -29,6 +33,8 @@ const store = [
     price: 19.99,
     category: 3,
     deal: true,
+    stock: 15,
+    image: 'https://acma-bucket.s3.eu-west-2.amazonaws.com/public/brightcopperkettle.png'
   },
   {
     id: 4,
@@ -37,6 +43,8 @@ const store = [
     price: 7.99,
     category: 2,
     deal: true,
+    stock: 8,
+    image: 'https://acma-bucket.s3.eu-west-2.amazonaws.com/public/warmwollenmittens.jpg'
   },
 ];
 

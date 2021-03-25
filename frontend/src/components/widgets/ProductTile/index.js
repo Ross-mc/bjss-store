@@ -1,49 +1,178 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./productTile.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
+import Modal from 'react-modal';
 
-export default ({ product, addToBasket, removeFromBasket,setSelectedProduct }) => {
-  const style = removeFromBasket?styles.basketTile:styles.tile;
-  const style2 = product.quantity === 0 ? styles.ctaNo : styles.cta;
+export default ({ product, addToBasket, removeFromBasket, tileOrientation, increaseQuantity, reduceQuantity, clearBasketProduct }) => {
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className={style} onClick={() => setSelectedProduct(product)}>
-      <div className={styles.tileGrid}>
-        <div className={styles.imageContainer}>
-          <FontAwesomeIcon icon={faCamera} />
-        </div>
-        <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
-        <p className={styles.price}>£{product.price}</p>
-        {product.quantity > 0 && (
-          <p className={styles.quantity}>Quantity: {product.quantity}</p>
-        )}
-        {addToBasket && (
-          <button
-            className={ style2 }
-            onClick={(e) => {
-              e.stopPropagation();
-              if (product.quantity !== 0) {
-                addToBasket(product);
-              }
-            }}
-          >
-            <FontAwesomeIcon icon={faShoppingBasket} /> {product.quantity === 0 ? "Out of Stock" : "Add to Basket"}
-          </button>
-        )}
-        {removeFromBasket && (
-          <button
-            className={styles.secondaryButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              removeFromBasket(product);
-            }}
-          >
-            Remove from Basket
-          </button>
-        )}
-      </div>
+    <>
+      <div className={tileOrientation === "column" ? styles.tileColumn : styles.tile} onClick={() => {
+        console.log(product);
+        setModalOpen(true);
+      }}>
+        <div className={tileOrientation === "column" ? styles.tileGridColumn : styles.tileGrid}>
 
-    </div>
+          <div className={styles.imageContainer}>
+            {/* <FontAwesomeIcon icon={faCamera} /> */}
+            <img width="100" height="87"  src={`${product.image}`}></img>
+          </div>
+          <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
+          <h5>
+          
+            {product.stock ? <p>Quantity remaining: {product.stock}</p> : <p>Out of stock</p>  }
+          
+          </h5>
+
+          <p className={styles.price}>£{product.price}</p>
+          {product.quantity && (
+            <p className={styles.quantity}>Quantity: {product.quantity}</p>
+          )}
+
+          {addToBasket && (
+            <button
+              disabled={!product.stock}
+              className={styles.cta}
+              onClick={(e) => {
+                e.stopPropagation();
+                addToBasket(product);
+              }}
+            >
+              <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
+            </button>
+          )}
+
+          {/* Basket  */}
+
+          {removeFromBasket && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFromBasket(product);
+              }}
+            >
+              Remove from Basket
+            </button>
+          )}
+
+          {increaseQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                increaseQuantity(product);
+              }}
+            >
+              +
+            </button>
+          )}
+
+          {reduceQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                reduceQuantity(product);
+              }}
+            >
+              -
+            </button>
+          )}
+
+          
+
+          {clearBasketProduct && (
+            <button
+              className={styles.tertiaryProduct}
+              onClick={(e) => {
+                e.stopPropagation();
+                clearBasketProduct(product);
+              }}
+            >
+              Remove Product
+            </button>
+          )}
+
+        </div>
+      </div>
+      <Modal isOpen={modalOpen} onAfterOpen={() => { console.log('MODAL OPEN') }} onRequestClose={() => { setModalOpen(false) }}>
+        <div className={styles.tileGrid}>
+          <div className={styles.imageContainer}>
+            <FontAwesomeIcon icon={faCamera} />
+          </div>
+          <h3 className={styles.shortDescription}>{product.longDescription}</h3>
+          <p className={styles.price}>£{product.price}</p>
+          {product.quantity && (
+            <p className={styles.quantity}>Quantity: {product.quantity}</p>
+          )}
+          {addToBasket && (
+            <button
+              className={styles.cta}
+              onClick={() => addToBasket(product)}
+              disabled={!product.stock}
+            >
+              <FontAwesomeIcon icon={faShoppingBasket} /> Add to Basket
+            </button>
+          )}
+
+          {/* Basket */}
+
+          {/* {removeFromBasket && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => removeFromBasket(product)}
+            >
+              Remove from Basket
+            </button>
+          )} */}
+
+
+          {removeFromBasket && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                removeFromBasket(product);
+              }}
+            >
+              Remove from Basket
+            </button>
+          )}
+
+          {increaseQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                increaseQuantity(product);
+              }}
+            >
+              +
+            </button>
+          )}
+
+          {reduceQuantity && (
+            <button
+              className={styles.secondaryButton}
+              onClick={() => {
+                reduceQuantity(product);
+              }}
+            >
+              -
+            </button>
+          )}
+
+        </div>
+        <button onClick={() => {
+          setModalOpen(false)
+          console.log(modalOpen)
+        }}
+        >
+          Close
+      </button>
+      </Modal>
+    </>
   );
 };

@@ -3,7 +3,7 @@ import TodaysDeals from '../../components/containers/TodaysDeals';
 
 export default () => (
   <div>
-    <h1>Todays Deals</h1>
+    <h2>Todays Deals</h2>
       <TodaysDeals/>
     
   </div>

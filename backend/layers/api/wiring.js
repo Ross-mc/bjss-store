@@ -15,6 +15,11 @@ const NewOrderService = require('../business-logic/order').NewOrderService
 const dataAccessLayer = require('../data-access')
 
 async function wire(express) {
+    const corsOptions = {
+        origin: 'http://localhost:3000',
+        credentials: true,
+    
+    }
 
     const app = express()
     app.use(express.json()) // Parse JSON request bodies automagically
