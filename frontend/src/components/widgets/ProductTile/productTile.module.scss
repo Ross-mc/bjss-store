@@ -54,7 +54,7 @@ img {
 
 .cta {
     @include buttonStyle;
-    background-color: $callToAction;
+    background-color: $brownRed;
     color: $white;
 }
 .cta:disabled{
