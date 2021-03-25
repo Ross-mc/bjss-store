@@ -70,14 +70,18 @@ export const getProductsForCategory = async (category) => {
 
 export const getProductSearch = async (searchString) => {
   const trimmedSearch = searchString.trim().toLowerCase();
-  await wait(500);
 
-  const results = store.filter(
-    (product) =>
-      product.shortDescription.toLowerCase().includes(trimmedSearch) ||
-      product.longDescription.toLowerCase().includes(trimmedSearch)
-  );
-  return results;
+  return fetch(`http://localhost:4001/api/product/catalogue?search=${trimmedSearch}`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
+
+  // const results = store.filter(
+  //   (product) =>
+  //     product.shortDescription.toLowerCase().includes(trimmedSearch) ||
+  //     product.longDescription.toLowerCase().includes(trimmedSearch)
+  // );
+  // return results;
 };
 
 export const getProductCategories = async () => {

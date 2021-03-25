@@ -9,23 +9,28 @@ import { getProductCategories } from "../../mockService";
 export default () => {
     let { type, query } = useParams();
 
-    const [categoryName, setCategoryName] = useState(query);
+    const [displayQuery, setDisplayQuery] = useState(query);
 
     useEffect(() => {
-      const getCategory = async () => {
-        const categories = await getProductCategories();
-        const category = categories.find(category => {
-          return category.id == query
-        })
-        return category;
+      const parsedQuery = parseInt(query, 10);
+      if (isNaN(parsedQuery)) {
+        setDisplayQuery(query);
+      } else {
+        const getCategory = async () => {
+          const categories = await getProductCategories();
+          const category = categories.find(category => {
+            return category.id == query
+          })
+          return category;
+        }
+        getCategory().then(category => setDisplayQuery(category.name))
       }
-      getCategory().then(category => setCategoryName(category.name))
-    });
+    }, [query]);
 
     
   return (
     <div>
-      <h3>Showing Results for: <em>{categoryName}</em></h3>
+      <h3>Showing Results for: <em>{displayQuery}</em></h3>
       <Category type={type} query={query} />
     </div>
   );
