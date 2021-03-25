@@ -81,5 +81,8 @@ export const getProductSearch = async (searchString) => {
 };
 
 export const getProductCategories = async () => {
-  return categories;
+  return fetch(`http://localhost:4001/api/product/categories`).then(res => res.json()).then(data => data).catch(e => {
+    console.log(e);
+    return [];
+  });
 };
