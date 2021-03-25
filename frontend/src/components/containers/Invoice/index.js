@@ -29,7 +29,8 @@ export default () => {
             }
             const newImages = await Promise.all(newImagesPromises)
             setImages([...images, ...newImages])
-            callTextract(images[0].base64)
+            callTextract(newImages[0].base64)
+            // callTextract(images[0].base64)
         }
         // e.target.value = "";
     }
@@ -46,7 +47,10 @@ export default () => {
             },
             headers: {
                 "x-api-key": "YnkehjXECg669fNaBEErV6optvKhvRBXaXbJXf4Y",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+
             }
         }).then(res => res.json()).then(result => console.log(result))
     }
