@@ -1,9 +1,9 @@
 import React from "react";
-// import TodaysDeals from '../../components/containers/TodaysDeals';
+import Invoice from '../../components/containers/Invoice';
 
 export default () => (
   <div>
     <h2>Invoices</h2>
-      {/* <TodaysDeals/> */}
+      <Invoice />
   </div>
 );
