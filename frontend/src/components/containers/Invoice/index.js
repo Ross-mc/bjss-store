@@ -117,6 +117,7 @@ export default () => {
                             <div className="form-group">
                                 <label for={kvp[0]}>{kvp[0]}</label>
                                 <input name={kvp[0]} type="text" className="form-control" value={kvp[1]}/>
+                                <br></br>
                             </div>
                         )
                     })}
