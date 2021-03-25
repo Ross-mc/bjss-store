@@ -56,8 +56,8 @@ export default () => {
     const parseText = text => {
         // returns an object having read the returned string from aws lambda/textract
         let dataArray = text.split('\n').splice(29, 14)
-        console.log(text)
-        return {
+
+        let dataAr = {
             "quantity": dataArray[0],
             "item #": dataArray[1],
             "description": dataArray[2],
@@ -69,6 +69,8 @@ export default () => {
             "sales tax": dataArray[11],
             "total": dataArray[13],
         }
+        console.log(dataAr)
+        return dataAr
     }
 
     return (
