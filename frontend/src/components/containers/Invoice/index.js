@@ -38,8 +38,6 @@ export default () => {
     const callTextract = base64String => {
         //fetch(api end point)
         //process.env.TEXTRACT_KEY
-        //
-        console.log(base64String.substring(22))
         fetch("https://dfkz0dlc46.execute-api.eu-west-2.amazonaws.com/default/getTextFromImage", {
             method: "POST",
             body: JSON.stringify({
@@ -50,7 +48,27 @@ export default () => {
             },
             mode: 'cors',
             redirect: 'follow'
-        }).then(res => res.json()).then(result => console.log(result))
+        }).then(res => res.json()).then(result => {
+            result = parseText(result)
+        })
+    }
+
+    const parseText = text => {
+        // returns an object having read the returned string from aws lambda/textract
+        let dataArray = text.split('\n').splice(29, 14)
+        console.log(text)
+        return {
+            "quantity": dataArray[0],
+            "item #": dataArray[1],
+            "description": dataArray[2],
+            "unit price": dataArray[3].substring(1),
+            "discount": dataArray[4],
+            "line total": dataArray[5],
+            "total discount": dataArray[7],
+            "subtotal": dataArray[9],
+            "sales tax": dataArray[11],
+            "total": dataArray[13],
+        }
     }
 
     return (
