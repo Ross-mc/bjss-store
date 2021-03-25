@@ -73,16 +73,16 @@ export default () => {
 
     return (
         <div>
-            <input type="file" onChange={uploadImage} multiple />
+            <input type="file" onChange={uploadImage} multiple style={{marginTop: "20px", marginBottom: "20px"}}/>
             {
                 images.length > 0
                     ? images.map((imageObj, i) => {
                         return (
-                            <div key={i}>
+                            <div style={{width: "80%", margin: "0 auto", textAlign: "center"}} key={i}>
                                 <img
-                                    width="50"
+                                    style={{maxHeight: "400px", display:"inline"}}
                                     src={imageObj.base64}
-                                    alt=''
+                                    alt='uploadedImg'
                                 />
                                 <div>
                                     <span>{imageObj.size ? imageObj.size : '-'}</span>
