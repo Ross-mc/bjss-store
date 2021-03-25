@@ -4,6 +4,16 @@ import Header from "../../widgets/Header";
 
 export default () => {
     const [images, setImages] = useState([])
+    const [resultsFromTextract, setResultsFromTextract] = useState({   
+        orderNumber: "",
+        item: "",
+        unitPrice: "",
+        subtotal: "",
+        discount: "",
+        tax: "",
+        quantity: "",
+        totalPrice: "",
+    })
 
     const fileToDataUri = (image) => {
         return new Promise((res) => {
@@ -53,6 +63,8 @@ export default () => {
         }).then(res => res.json()).then(result => console.log(result))
     }
 
+    //setResultsFromTextract({...resultsFromTextract, "<all the properties you want to change, i.e. quantity: >"})
+
     return (
         <div>
             <input type="file" onChange={uploadImage} multiple style={{marginTop: "20px", marginBottom: "20px"}}/>
@@ -69,17 +81,41 @@ export default () => {
                                 <div>
                                     <span>{imageObj.size ? imageObj.size : '-'}</span>
                                     <span>{imageObj.name ? imageObj.name : '-'}</span>
-                                    {/* <span
-                                onClick={() => removeImage(i)}
-                            >
-                                test
-                            </span> */}
                                 </div>
                             </div>
                         )
                     })
                     : null
             }
+            <div className={resultsFromTextract.totalPrice === "" ? "d-none" : "container"}>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        Order Number : {resultsFromTextract.orderNumber}
+                    </li>
+                    <li className="list-group-item">
+                        Item : {resultsFromTextract.item}
+                    </li>
+                    <li className="list-group-item">
+                        Unit Price : {resultsFromTextract.unitPrice}
+                    </li>
+                    <li className="list-group-item">
+                        Quantity : {resultsFromTextract.quantity}
+                    </li>
+                    <li className="list-group-item">
+                        Sub-total : {resultsFromTextract.subtotal}
+                    </li>
+                    <li className="list-group-item">
+                        Discount : {resultsFromTextract.discount}
+                    </li>
+                    <li className="list-group-item">
+                        Tax : {resultsFromTextract.tax}
+                    </li>
+                    <li className="list-group-item">
+                        Total Price : {resultsFromTextract.totalPrice}
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-danger">Submit Invoice</button>
+            </div>
         </div>
     );
 };
