@@ -40,18 +40,16 @@ export default () => {
         //process.env.TEXTRACT_KEY
         //
         console.log(base64String.substring(22))
-        fetch("https://ay5sr2g1w1.execute-api.eu-west-2.amazonaws.com/default/getTextFromImage", {
+        fetch("https://dfkz0dlc46.execute-api.eu-west-2.amazonaws.com/default/getTextFromImage", {
             method: "POST",
-            body: {
+            body: JSON.stringify({
                 "Image": base64String.substring(22)
-            },
+            }),
             headers: {
-                "x-api-key": "YnkehjXECg669fNaBEErV6optvKhvRBXaXbJXf4Y",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin" : "*",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-
-            }
+                "Content-Type": "application/json"
+            },
+            mode: 'cors',
+            redirect: 'follow'
         }).then(res => res.json()).then(result => console.log(result))
     }
 
