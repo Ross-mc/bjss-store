@@ -27,7 +27,7 @@ const store = [
   },
   {
     id: 3,
-    shortDescription: "Bright Copper Kettle",
+    shortDescription: "Copper Kettle",
     longDescription:
       "Copper base water heating device, professionally cleaned to a high standard",
     price: 19.99,
@@ -38,7 +38,7 @@ const store = [
   },
   {
     id: 4,
-    shortDescription: "Warm Woollen Mittens",
+    shortDescription: "Woollen Mittens",
     longDescription: "Pair of angora wool mittens in a fetching shade of puce",
     price: 7.99,
     category: 2,
