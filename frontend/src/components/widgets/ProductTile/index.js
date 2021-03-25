@@ -17,8 +17,8 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
         <div className={tileOrientation === "column" ? styles.tileGridColumn : styles.tileGrid}>
 
           <div className={styles.imageContainer}>
-            {/* <FontAwesomeIcon icon={faCamera} /> */}
-            <img width="100" height="87"  src={`${product.image}`}></img>
+            <FontAwesomeIcon icon={faCamera} />
+            {/* <img width="100" height="87"  src={`${product.image}`}></img> */}
           </div>
           <h3 className={styles.shortDescription}>{product.shortDescription}</h3>
           <h5>
