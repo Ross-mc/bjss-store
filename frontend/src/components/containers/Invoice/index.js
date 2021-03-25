@@ -4,16 +4,19 @@ import Header from "../../widgets/Header";
 
 export default () => {
     const [images, setImages] = useState([])
-    const [resultsFromTextract, setResultsFromTextract] = useState({   
-        orderNumber: "",
-        item: "",
-        unitPrice: "",
-        subtotal: "",
-        discount: "",
-        tax: "",
-        quantity: "",
-        totalPrice: "",
+    const [resultsFromTextract, setResultsFromParsedTextract] = useState({
+        "quantity": "",
+        "item #": "",
+        "description": "",
+        "unit price": "",
+        "discount": "",
+        "line total": "",
+        "total discount": "",
+        "subtotal": "",
+        "sales tax": "",
+        "total": ""
     })
+
 
     const fileToDataUri = (image) => {
         return new Promise((res) => {
@@ -48,8 +51,6 @@ export default () => {
     const callTextract = base64String => {
         //fetch(api end point)
         //process.env.TEXTRACT_KEY
-        //
-        console.log(base64String.substring(22))
         fetch("https://dfkz0dlc46.execute-api.eu-west-2.amazonaws.com/default/getTextFromImage", {
             method: "POST",
             body: JSON.stringify({
@@ -60,7 +61,28 @@ export default () => {
             },
             mode: 'cors',
             redirect: 'follow'
-        }).then(res => res.json()).then(result => console.log(result))
+        }).then(res => res.json()).then(result => {
+            const parsedResult = parseText(result);
+            setResultsFromParsedTextract({...resultsFromTextract, ...parsedResult})
+        })
+    }
+
+    const parseText = text => {
+        // returns an object having read the returned string from aws lambda/textract
+        let dataArray = text.split('\n').splice(29, 14)
+        console.log(text)
+        return {
+            "quantity": dataArray[0],
+            "item #": dataArray[1],
+            "description": dataArray[2],
+            "unit price": dataArray[3].substring(1),
+            "discount": dataArray[4],
+            "line total": dataArray[5],
+            "total discount": dataArray[7],
+            "subtotal": dataArray[9],
+            "sales tax": dataArray[11],
+            "total": dataArray[13],
+        }
     }
 
     //setResultsFromTextract({...resultsFromTextract, "<all the properties you want to change, i.e. quantity: >"})
@@ -87,35 +109,17 @@ export default () => {
                     })
                     : null
             }
-            <div className={resultsFromTextract.totalPrice === "" ? "d-none" : "container"}>
-                <ul className="list-group">
-                    <li className="list-group-item">
-                        Order Number : {resultsFromTextract.orderNumber}
-                    </li>
-                    <li className="list-group-item">
-                        Item : {resultsFromTextract.item}
-                    </li>
-                    <li className="list-group-item">
-                        Unit Price : {resultsFromTextract.unitPrice}
-                    </li>
-                    <li className="list-group-item">
-                        Quantity : {resultsFromTextract.quantity}
-                    </li>
-                    <li className="list-group-item">
-                        Sub-total : {resultsFromTextract.subtotal}
-                    </li>
-                    <li className="list-group-item">
-                        Discount : {resultsFromTextract.discount}
-                    </li>
-                    <li className="list-group-item">
-                        Tax : {resultsFromTextract.tax}
-                    </li>
-                    <li className="list-group-item">
-                        Total Price : {resultsFromTextract.totalPrice}
-                    </li>
-                </ul>
+            <form className={resultsFromTextract["quantity"] === "" ? "d-none" : "container"}>
+                    {Object.entries(resultsFromTextract).map(kvp => {
+                        return (
+                            <div className="form-group">
+                                <label for={kvp[0]}>{kvp[0]}</label>
+                                <input name={kvp[0]} type="text" className="form-control" value={kvp[1]}/>
+                            </div>
+                        )
+                    })}
                 <button type="button" class="btn btn-danger">Submit Invoice</button>
-            </div>
+            </form>
         </div>
     );
 };
