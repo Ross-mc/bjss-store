@@ -9,6 +9,7 @@ import ProductSearch from "./pages/ProductSearch";
 import Payment from "./pages/Payment";
 import Redirect from "./pages/Redirect";
 import Checkout from "./pages/Checkout";
+import Invoices from "./pages/Invoices";
 import Registration from "./pages/Registration";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -29,6 +30,7 @@ const routes = [
   { path: "/checkout", Component: Checkout},
   { path: "/registration", Component: Registration},
   { path: "/account", Component: Account},
+  { path: "/invoices", Component: Invoices},
   { path: "/", Component: Home }  
 ];
 

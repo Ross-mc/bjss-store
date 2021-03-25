@@ -34,8 +34,13 @@ export default ({
       </Link>
 
       <Link to="/">
-          <h1 className={styles.brandname}>ACME Stores</h1>
+        <h1 className={styles.brandname}>ACME Stores</h1>
       </Link>
+
+      <Link to="/invoices">
+        <h1>Upload invoice</h1>
+      </Link>
+
       <span>
         <input
           id="search"
