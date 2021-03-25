@@ -55,7 +55,7 @@ export default () => {
 
     return (
         <div>
-            <input type="file" onChange={uploadImage} multiple />
+            <input type="file" onChange={uploadImage} multiple style={{marginTop: "20px", marginBottom: "20px"}}/>
             {
                 images.length > 0
                     ? images.map((imageObj, i) => {
