@@ -1,63 +1,67 @@
+
 function NewAccountApi(accountService) {
 
-    /**
-     * Use these functions to update the currently signed in user in the session
-     */
-    const getSignedInUserId = req => req.session.customerId
-    const setSignedInUserId = (req, customerId) => req.session.customerId = customerId
-
-//     POST /account/sign-in {email: string, password: string} => AccountApiResponse, starts session
-// POST /account/sign-up ShippingDetails => AccountApiResponse, starts session
-// GET  /account ShippingDetails => AccountApiResponse, must be signed in
-// POST /account ShippingDetails => AccountApiResponse, must be signed in
-
     async function postSignIn(req, res) {
-        const { email, password } = req.body;
-        if (!email || !password){
-            res.status(400).json({message: "malformed body"})
+        const { email, password } = req.body
+
+        if (!email || !password)
+            return res.sendStatus(400)
+
+        const account = await accountService.signIn(email, password)
+
+        if (account.error) {
+            // At the moment everywhere else we're trapping errors at the outer layer
+            // logging and returning a 500. Or we're returning meaningful errors to
+            // the caller. Here we don't want to return the details of the error
+            // because that may help an attacker. We do want to know *why* the signin
+            // failed (see OWASP Top 10 #10). So, for once, we log.  Note this should
+            // really be monitoringService.event(error) rather than log but this'll do
+            console.error(account)
+            return res.status(401).json({ error: 'invalidCredentials' })
         }
-        const signedInAccount = await accountService.signIn(email, password);
-        if (signedInAccount.error){
-            res.status(401).json({message: "Invalid login details"})
-        } else {
-            setSignedInUserId(req, signedInAccount.id)
-            res.cookie('customerId', signedInAccount.id).status(200).json(signedInAccount);
-        }
+        req.session.customerId = account.id // this indicates user is signed in!
+        res.json(account)
     }
 
     async function postSignUp(req, res) {
-        const { email, name, address, postcode, password } = req.body;
-        if (!email || !name || !address || !postcode || !password){
-            return res.status(400).json("Malformed request body");
-        }    
+        const { email, password, name, address, postcode } = req.body
+
+        // This validation is awful.  How should it be improved?  Why?
+        if (!email || !password || !name || !address || !postcode)
+            return res.status(400).json({ error: 'malformedRequest' })
+
         try {
-            const newAccount = await accountService.signUp({email, name, address, postcode, password});
-            const signedInAccount = await accountService.signIn(email, password);
-            const signedInUserId = setSignedInUserId(req, newAccount.id);
-            return res.cookie('customerId', newAccount.id).status(200).json(signedInAccount);
-        } catch (e) {
-            console.error('error inside catch', e)
-            return res.status(401).json({errorMsg: "Email already registered"})
-        }   
+            const account = await accountService.signUp(req.body)
+            req.session.customerId = account.id // this indicates user is signed in!
+            res.json(account)
+        } catch(e) {
+            // This error message is deliberately misleading in an attempt to not
+            // give information away about what accounts exist to an attacker 
+            // If we think like an attacker, does this misdirection actually hinder us?
+            return res.status(400).json({ error: 'malformedRequest' })
+        }
+        
     }
 
     async function getAccount(req, res) {
-        const signedInUserId = await getSignedInUserId(req);
-        const signedInAccount = await accountService.getById(signedInUserId);
-        return res.status(200).json(signedInAccount) 
+        const account = await accountService.getById(req.session.customerId)
+        res.json(account)
     }
 
     async function postAccount(req, res) {
-        const validProps = ["password", "email", "name", "address", "postcode", "id"];
-        const propsSent = Object.keys(req.body);
-        const areAllPropsValid = propsSent.every(prop => validProps.includes(prop));
-        if (areAllPropsValid){
-            const signedInUserId = await getSignedInUserId(req);
-            const updatedUser = await accountService.update({id: signedInUserId, ...req.body});
-            return res.status(200).json(updatedUser);
-        } else {
-            return res.status(400).json({errorMsg: "malformed request"});
-        }
+        // This whitelists what we can update. i.e. prevents directly updating
+        // passwordHash or adding myRandomProperty to the account
+        const allowedKeys = ['email', 'password', 'name', 'address', 'postcode']
+        const validKeys = Object.keys(req.body)
+            .filter(key => allowedKeys.includes(key)) 
+            .filter(key => !!req.body[key]) // Exclude null, undefined, empty,values
+
+        const update = validKeys.reduce((obj, key) => (obj[key] = req.body[key], obj) ,{})
+
+        const customerId = req.session.customerId
+        update.id = customerId
+        const account = await accountService.update(update)
+        res.json(account)
     }
 
     return {
