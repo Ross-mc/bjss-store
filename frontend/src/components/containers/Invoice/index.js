@@ -73,6 +73,18 @@ export default () => {
     const callTextract = base64String => {
         //fetch(api end point)
         //process.env.TEXTRACT_KEY
+        setFormState({
+            "quantity": "",
+            "item #": "",
+            "description": "",
+            "unit price": "",
+            "discount": "",
+            "line total": "",
+            "total discount": "",
+            "subtotal": "",
+            "sales tax": "",
+            "total": ""
+        });
         fetch("https://dfkz0dlc46.execute-api.eu-west-2.amazonaws.com/default/getTextFromImage", {
             method: "POST",
             body: JSON.stringify({
@@ -152,22 +164,21 @@ export default () => {
             <input type="file" onChange={uploadImage} multiple style={{marginTop: "20px", marginBottom: "20px"}}/>
             {
                 images.length > 0
-                    ? images.map((imageObj, i) => {
+                    ? 
                         
-                        return (
-                            <div style={{width: "80%", margin: "0 auto", textAlign: "center"}} key={i}>
+                    
+                            <div style={{width: "80%", margin: "0 auto", textAlign: "center"}} key={1}>
                                 <img
                                     style={{maxHeight: "400px", display:"inline"}}
-                                    src={imageObj.base64}
+                                    src={images[images.length -1].base64}
                                     alt='uploadedImg'
                                 />
                                 <div>
-                                    <span>{imageObj.size ? imageObj.size : '-'}</span>
-                                    <span>{imageObj.name ? imageObj.name : '-'}</span>
+                                    <span>{images[images.length -1].size ? images[images.length -1].size : '-'}</span>
+                                    <span>{images[images.length -1].name ? images[images.length -1].name : '-'}</span>
                                 </div>
                             </div>
-                        )
-                    })
+    
                     : null
             }
             <small id="formHelp" class="form-text text-muted">Upload an image of an invoice or manually enter details below.</small>

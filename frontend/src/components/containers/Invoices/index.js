@@ -13,16 +13,29 @@ export default () => {
         "description": "SOCKS-BLACK",
         "discount": "10%",
         "item #": "347-1",
-        "line total": "32.40",
+        "line total": "£32.40",
         "quantity": "100",
         "sales tax": "0%",
-        "subtotal": "32.40",
-        "total": "32.40",
-        "total discount": "3.60",
-        "unit price": "0.36"
-      }])
+        "subtotal": "£32.40",
+        "total": "£32.40",
+        "total discount": "£3.60",
+        "unit price": "£0.36"
+      },
+      {
+        "description": "blue-BEAN",
+        "discount": "15%",
+        "item #": "9-81",
+        "line total": "£718.08",
+        "quantity": "512",
+        "sales tax": "0%",
+        "subtotal": "£718.08",
+        "total": "£718.08",
+        "total discount": "£126.72",
+        "unit price": "£1.65"
+      }
+      ])
     }, 1000)
-  
+
   }, [])
 
 
