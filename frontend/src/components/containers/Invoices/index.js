@@ -2,24 +2,27 @@ import React, { useState, useEffect } from "react";
 // import TodaysDeals from '../../components/containers/TodaysDeals';
 
 export default () => {
-  const [savedInvoices, getSavedInvoices] = useState([{
-    "description": "SOCKS-BLACK",
-    "discount": "10%",
-    "item #": "347-1",
-    "line total": "53.40",
-    "quantity": "100",
-    "sales tax": "0%",
-    "subtotal": "32.40",
-    "total": "32.40",
-    "total discount": "1.60",
-    "unit price": "0.36"
-  }]);
+  const [savedInvoices, getSavedInvoices] = useState([]);
 
   useEffect(() => {
     //make api to database
     //retrieve invoices from db
     //updated saved invoices state
-    // getSavedInvoices([])
+    setTimeout(() => {
+      getSavedInvoices([{
+        "description": "SOCKS-BLACK",
+        "discount": "10%",
+        "item #": "347-1",
+        "line total": "32.40",
+        "quantity": "100",
+        "sales tax": "0%",
+        "subtotal": "32.40",
+        "total": "32.40",
+        "total discount": "3.60",
+        "unit price": "0.36"
+      }])
+    }, 1000)
+  
   }, [])
 
 
@@ -60,7 +63,7 @@ export default () => {
             })}
           </tbody>
         </table>
-        : <p>No invoices return from database</p>}
+        : <p>Getting Invoices from Database...</p>}
 
     </div>
   );
