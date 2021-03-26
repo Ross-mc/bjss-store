@@ -164,6 +164,8 @@ export default () => {
                             </div>
                         )
                     })}
+                <small id="formHelp" class="form-text text-muted">Please confirm all invoice details before submission</small>
+                <br />
                 <button type="submit" className="btn btn-danger">Submit Invoice</button>
             </form>
         </div>
