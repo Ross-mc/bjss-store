@@ -1,9 +1,9 @@
 import React from "react";
-import Invoice from '../../components/containers/Invoice';
+import Invoices from '../../components/containers/Invoices';
 
 export default () => (
   <div>
     <h2>Invoices</h2>
-      <Invoice />
+    <Invoices />
   </div>
 );

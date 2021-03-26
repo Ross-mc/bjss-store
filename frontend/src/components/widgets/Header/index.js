@@ -54,7 +54,7 @@ export default ({
         />
       </span>
       <IconLink icon={icons.SEARCH} target={searchQuery.length ? `/search/query/${searchQuery}`: undefined } />
-      <IconLink icon={icons.INVOICE}target="/invoices" />
+      <IconLink icon={icons.INVOICE}target="/invoice" />
       <IconLink icon={icons.USER} target={"/login"} />
       <Roundel count={itemsInBasket}><IconLink icon={icons.BASKET} target="/basket" /></Roundel>
     </div>

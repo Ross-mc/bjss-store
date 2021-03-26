@@ -113,6 +113,7 @@ export default () => {
         event.preventDefault();
         // make api call to backend to submit the data, then display successful response on frontend
         // clear form using below func
+        console.log(formState)
 
         setFormState({
             "quantity": "",

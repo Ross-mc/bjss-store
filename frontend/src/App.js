@@ -9,6 +9,7 @@ import ProductSearch from "./pages/ProductSearch";
 import Payment from "./pages/Payment";
 import Redirect from "./pages/Redirect";
 import Checkout from "./pages/Checkout";
+import Invoice from "./pages/Invoice";
 import Invoices from "./pages/Invoices";
 import Registration from "./pages/Registration";
 
@@ -30,6 +31,7 @@ const routes = [
   { path: "/checkout", Component: Checkout},
   { path: "/registration", Component: Registration},
   { path: "/account", Component: Account},
+  { path: "/invoice", Component: Invoice},
   { path: "/invoices", Component: Invoices},
   { path: "/", Component: Home }  
 ];
