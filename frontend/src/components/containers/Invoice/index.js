@@ -109,10 +109,29 @@ export default () => {
         return dataAr
     }
 
+    const submitInvoiceHandler = event => {
+        event.preventDefault();
+        // make api call to backend to submit the data, then display successful response on frontend
+        // clear form using below func
+
+        setFormState({
+            "quantity": "",
+            "item #": "",
+            "description": "",
+            "unit price": "",
+            "discount": "",
+            "line total": "",
+            "total discount": "",
+            "subtotal": "",
+            "sales tax": "",
+            "total": ""
+        })
+    }
+
     //setResultsFromTextract({...resultsFromTextract, "<all the properties you want to change, i.e. quantity: >"})
 
     return (
-        <div>
+        <div style={{marginBottom: "30px"}}>
             <input type="file" onChange={uploadImage} multiple style={{marginTop: "20px", marginBottom: "20px"}}/>
             {
                 images.length > 0
@@ -134,7 +153,7 @@ export default () => {
                     })
                     : null
             }
-            <form className={formState["quantity"] === "" ? "d-none" : "container"}>
+            <form onSubmit={submitInvoiceHandler} className="container">
                     {Object.entries(formState).map(([key, value]) => {
                         // console.log(Object.entries(formState))
                         return (
@@ -145,7 +164,7 @@ export default () => {
                             </div>
                         )
                     })}
-                <button type="button" className="btn btn-danger">Submit Invoice</button>
+                <button type="submit" className="btn btn-danger">Submit Invoice</button>
             </form>
         </div>
     );
