@@ -200,7 +200,7 @@ export default () => {
                 <div className={formSubmitted ? "alert alert-success": "d-none"} role="alert">
                     Successfuly saved invoice to database
                 </div>
-                <button type="submit" className="btn btn-danger">Submit Invoice</button>
+                <button type="submit" className="btn btn-primary">Submit Invoice</button>
 
             </form>
         </div>
