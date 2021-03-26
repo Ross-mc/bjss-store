@@ -23,7 +23,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
           <h4 className={styles.shortDescription}>{product.shortDescription.replace("-","")}</h4>
           <h5>
           
-            {product.quantityRemaining ? <p>Remaining: {product.quantityRemaining}</p> : <p>Out of Stock</p>  }
+            {product.quantityRemaining ? <p>Quantity Remaining: {product.quantityRemaining}</p> : <p>Out of Stock</p>  }
           
           </h5>
 
@@ -96,8 +96,10 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
               Remove Product
             </button>
           )}
+          
 
         </div>
+        <hr className={styles.striped}></hr>
       </div>
       <Modal isOpen={modalOpen} onAfterOpen={() => { console.log('MODAL OPEN') }} onRequestClose={() => { setModalOpen(false) }}>
         <div className={styles.tileGrid}>

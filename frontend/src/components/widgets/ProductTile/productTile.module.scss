@@ -1,12 +1,14 @@
 @import '../../../styles/colours';
 
 .tile {
-    border: 1px solid $primaryBackground;
+    border: 1px solid black;
     margin: 12px;
     padding: 12px;
     width: 500px;
-    color: $primaryBackground;
+    // color: $primaryBackground;
+    color: black;
     display: inline-block;
+    background-color: $lightGrey;
 }
 
 img {
@@ -36,7 +38,7 @@ img {
     display: grid;
     grid-template-columns:  1fr 1fr;
     grid-template-rows: auto auto auto auto;
-    width: 90%;
+    width: 50%;
     margin: 0 auto;
 }
 
@@ -47,14 +49,14 @@ img {
 
 @mixin buttonStyle {
     grid-column: 2;
-    border: 1px solid $primaryBackground;
+    border: 1px solid black;
     padding: 10px;
     border-radius: 3px;   
 }
 
 .cta {
     @include buttonStyle;
-    background-color: $brownRed;
+    background-color: $blue3;
     color: $white;
 }
 .cta:disabled{
@@ -73,3 +75,9 @@ img {
     margin: 0 auto;
 }
 
+.striped { 
+    border: 1px dashed #000; 
+    width: 90%; 
+    margin: auto; 
+    margin-top: 5%; 
+    margin-bottom: 5%; }
