@@ -4,7 +4,18 @@ import Header from "../../widgets/Header";
 
 export default () => {
     const [images, setImages] = useState([])
-    const [formState, setFormState] = useState({})
+    const [formState, setFormState] = useState({
+        "quantity": "",
+        "item #": "",
+        "description": "",
+        "unit price": "",
+        "discount": "",
+        "line total": "",
+        "total discount": "",
+        "subtotal": "",
+        "sales tax": "",
+        "total": ""
+    })
     const [resultsFromTextract, setResultsFromParsedTextract] = useState({
         "quantity": "",
         "item #": "",
@@ -17,6 +28,15 @@ export default () => {
         "sales tax": "",
         "total": ""
     })
+
+    const onChangeHandler = (event) => {
+        event.preventDefault();
+        const value = event.target.value;
+        const elemToUpdate = event.target.name;
+        const stateObject = {...formState};
+        stateObject[elemToUpdate] = value;
+        setFormState(stateObject)
+    }
 
 
     const fileToDataUri = (image) => {
@@ -65,7 +85,7 @@ export default () => {
         }).then(res => res.json()).then(result => {
             const parsedResult = parseText(result);
             setResultsFromParsedTextract({...resultsFromTextract, ...parsedResult})
-            
+            setFormState(parsedResult)
         })
     }
 
@@ -114,18 +134,18 @@ export default () => {
                     })
                     : null
             }
-            <form className={resultsFromTextract["quantity"] === "" ? "d-none" : "container"}>
-                    {Object.entries(resultsFromTextract).map(([key, value]) => {
-                        // console.log(Object.entries(resultsFromTextract))
+            <form className={formState["quantity"] === "" ? "d-none" : "container"}>
+                    {Object.entries(formState).map(([key, value]) => {
+                        // console.log(Object.entries(formState))
                         return (
                             <div className="form-group">
                                 <label for={key}>{key}</label>
-                                <input name={key} type="text" className="form-control" value={value}/>
+                                <input name={key} type="text" className="form-control" value={value} onChange={onChangeHandler}/>
                                 <br></br>
                             </div>
                         )
                     })}
-                <button type="button" class="btn btn-danger">Submit Invoice</button>
+                <button type="button" className="btn btn-danger">Submit Invoice</button>
             </form>
         </div>
     );
