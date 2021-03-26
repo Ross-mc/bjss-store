@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, { query, type }) => ({
     dispatch(fetchProducts({type, query}));
   },
   addToBasket: (product) => {
-    if(product.quantity)
+    // if(product.quantity)
       dispatch(addToBasket(product));
   },
 });

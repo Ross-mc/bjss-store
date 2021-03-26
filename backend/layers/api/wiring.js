@@ -2,7 +2,6 @@ const YAML = require('yamljs');
 const cors = require("cors")
 const session = require('express-session')
 const openApiUi = require("swagger-ui-express")
-const cookieParser = require("cookie-parser")
 
 const NewAccountApi = require('./account').NewAccountApi
 const NewProductApi = require('./product').NewProductApi
@@ -23,8 +22,8 @@ async function wire(express) {
 
     const app = express()
     app.use(express.json()) // Parse JSON request bodies automagically
-    app.use(cors()) // Allow a UI laoded from any server to call us, but note OWASP Top 10 #6
-    app.use(cookieParser());
+    app.use(cors(corsOptions)) // Allow a UI laoded from any server to call us, but note OWASP Top 10 #6
+    
 
     // Adds a session object to the request. As configured this won't get stored
     // in a database, so all session info is lost when we restart the server. 

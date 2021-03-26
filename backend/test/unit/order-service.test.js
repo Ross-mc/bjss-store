@@ -2,7 +2,7 @@ const expect = require('chai').expect
 const database = require('../../layers/data-access')
 const NewOrderService = require('../../layers/business-logic/order').NewOrderService
 
-xdescribe('Order Service', () => {
+describe('Order Service', () => {
 
     // Mainly happy path regression testing for this toy app. 
     // The error / edge case handling isn't that good anyway. 
