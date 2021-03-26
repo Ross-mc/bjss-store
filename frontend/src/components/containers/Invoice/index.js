@@ -28,6 +28,7 @@ export default () => {
         "sales tax": "",
         "total": ""
     })
+    const [formSubmitted, setFormSubmitted] = useState(false)
 
     const onChangeHandler = (event) => {
         event.preventDefault();
@@ -118,24 +119,30 @@ export default () => {
         return dataAr
     }
 
-    const submitInvoiceHandler = event => {
+    const submitInvoiceHandler = async event => {
         event.preventDefault();
         // make api call to backend to submit the data, then display successful response on frontend
         // clear form using below func
         console.log(formState)
-
-        setFormState({
-            "quantity": "",
-            "item #": "",
-            "description": "",
-            "unit price": "",
-            "discount": "",
-            "line total": "",
-            "total discount": "",
-            "subtotal": "",
-            "sales tax": "",
-            "total": ""
-        })
+        await setTimeout(() => {
+            setFormState({
+                "quantity": "",
+                "item #": "",
+                "description": "",
+                "unit price": "",
+                "discount": "",
+                "line total": "",
+                "total discount": "",
+                "subtotal": "",
+                "sales tax": "",
+                "total": ""
+            });
+            setFormSubmitted(true);
+            
+        }, 1000)
+        setTimeout(() => {
+            setFormSubmitted(false)
+        }, 2500)
     }
 
     //setResultsFromTextract({...resultsFromTextract, "<all the properties you want to change, i.e. quantity: >"})
@@ -177,7 +184,11 @@ export default () => {
                     })}
                 <small id="formHelp" class="form-text text-muted">Please confirm all invoice details before submission</small>
                 <br />
+                <div className={formSubmitted ? "alert alert-success": "d-none"} role="alert">
+                    Successfuly saved invoice to database
+                </div>
                 <button type="submit" className="btn btn-danger">Submit Invoice</button>
+
             </form>
         </div>
     );
