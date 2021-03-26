@@ -3,7 +3,7 @@
 .header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     display: grid;
-    grid-template-columns:  60px 60px auto auto 60px 60px 60px;
+    grid-template-columns:  60px 60px auto auto 60px 60px 60px 60px;
     background-color: $primaryBackground;
     
 
@@ -21,7 +21,7 @@
 }
 
 .brandimg {
-    height: 40px;
+    height: 80px;
     padding-top:10px
 }
 

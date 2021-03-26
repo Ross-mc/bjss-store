@@ -29,13 +29,16 @@ export default ({
           categoryStatus === "succeeded" && renderLinkList(categories, '/search/category')
         }
       />
-      <Link to="/">
+      <Link to="/" style={{width: "300px"}}>
         <img className={styles.brandimg} src={logo} alt="Logo" />
       </Link>
 
       <Link to="/">
-          <h1 className={styles.brandname}>ACME Stores</h1>
+        <h1 className={styles.brandname}>ACME Stores</h1>
       </Link>
+
+      
+
       <span>
         <input
           id="search"
@@ -51,6 +54,7 @@ export default ({
         />
       </span>
       <IconLink icon={icons.SEARCH} target={searchQuery.length ? `/search/query/${searchQuery}`: undefined } />
+      <IconLink icon={icons.INVOICE}target="/invoices" />
       <IconLink icon={icons.USER} target={"/login"} />
       <Roundel count={itemsInBasket}><IconLink icon={icons.BASKET} target="/basket" /></Roundel>
     </div>
