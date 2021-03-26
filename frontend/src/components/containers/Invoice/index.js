@@ -153,6 +153,7 @@ export default () => {
                     })
                     : null
             }
+            <small id="formHelp" class="form-text text-muted">Upload an image of an invoice or manually enter details below.</small>
             <form onSubmit={submitInvoiceHandler} className="container">
                     {Object.entries(formState).map(([key, value]) => {
                         // console.log(Object.entries(formState))
