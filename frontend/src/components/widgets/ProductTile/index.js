@@ -20,7 +20,7 @@ export default ({ product, addToBasket, removeFromBasket, tileOrientation, incre
             <FontAwesomeIcon icon={faCamera} />
             {/* <img width="100" height="87"  src={`${product.image}`}></img> */}
           </div>
-          <h3 className={styles.shortDescription}>{product.shortDescription.replace(/-/,"").replace(/^(.{11}[^\s]*).*/, "$1" + "...")}</h3>
+          <h4 className={styles.shortDescription}>{product.shortDescription.replace("-","")}</h4>
           <h5>
           
             {product.quantityRemaining ? <p>Remaining: {product.quantityRemaining}</p> : <p>Out of Stock</p>  }
