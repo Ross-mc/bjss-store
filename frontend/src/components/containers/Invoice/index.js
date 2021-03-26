@@ -4,6 +4,7 @@ import Header from "../../widgets/Header";
 
 export default () => {
     const [images, setImages] = useState([])
+    const [formState, setFormState] = useState({})
     const [resultsFromTextract, setResultsFromParsedTextract] = useState({
         "quantity": "",
         "item #": "",
@@ -114,12 +115,12 @@ export default () => {
                     : null
             }
             <form className={resultsFromTextract["quantity"] === "" ? "d-none" : "container"}>
-                    {Object.entries(resultsFromTextract).map(kvp => {
+                    {Object.entries(resultsFromTextract).map(([key, value]) => {
                         // console.log(Object.entries(resultsFromTextract))
                         return (
                             <div className="form-group">
-                                <label for={kvp[0]}>{kvp[0]}</label>
-                                <input name={kvp[0]} type="text" className="form-control" value={kvp[1]}/>
+                                <label for={key}>{key}</label>
+                                <input name={key} type="text" className="form-control" value={value}/>
                                 <br></br>
                             </div>
                         )
