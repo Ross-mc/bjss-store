@@ -136,6 +136,7 @@ export default () => {
         // make api call to backend to submit the data, then display successful response on frontend
         // clear form using below func
         console.log(formState)
+        setImages([])
         await setTimeout(() => {
             setFormState({
                 "quantity": "",
@@ -150,6 +151,7 @@ export default () => {
                 "total": ""
             });
             setFormSubmitted(true);
+            
             
         }, 1000)
         setTimeout(() => {
